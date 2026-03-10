@@ -44,4 +44,36 @@ router.get('/:id', (req, res) => {
     }
 });
 
+// POST /tasks - Creates a new task
+router.post('/', (req, res) => {
+    const { title, description, status, priority } = req.body;
+
+    if (!title || typeof title !== 'string' || title.trim() === '') {
+        return res.status(400).json({ error: 'title is required and must be a non-empty string' });
+    }
+
+    try {
+        const stmt = db.prepare(`
+      INSERT INTO tasks (title, description, status, priority)
+      VALUES (?, ?, ?, ?)
+    `);
+
+        const info = stmt.run(
+            title,
+            description || null,
+            status || 'todo',
+            priority || 'medium'
+        );
+
+        const newTask = db.prepare('SELECT * FROM tasks WHERE id = ?').get(info.lastInsertRowid);
+        res.status(201).json(newTask);
+    } catch (err) {
+        // If it's a constraint violation (like invalid status/priority), return 400
+        if (err.message.includes('CHECK constraint failed')) {
+            return res.status(400).json({ error: 'Invalid status or priority value' });
+        }
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
