@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import Menu from './components/Menu'
 import Testimonials from './components/Testimonials'
 import About from './components/About'
+import Reservation from './components/Reservation'
 import Contact from './components/Contact'
 import ScrollToTop from './components/ScrollToTop'
 import './App.css'
@@ -15,6 +16,7 @@ function App() {
       <Menu />
       <Testimonials />
       <About />
+      <Reservation />
       <Contact />
       <ScrollToTop />
     </div>
