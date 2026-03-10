@@ -76,4 +76,45 @@ router.post('/', (req, res) => {
     }
 });
 
+// PUT /tasks/:id - Updates an existing task
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { title, description, status, priority } = req.body;
+
+    try {
+        // First, check if task exists
+        const task = db.prepare('SELECT * FROM tasks WHERE id = ?').get(id);
+        if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+
+        // Prepare update values (fall back to current values if not provided)
+        const updatedTitle = title !== undefined ? title : task.title;
+        const updatedDescription = description !== undefined ? description : task.description;
+        const updatedStatus = status !== undefined ? status : task.status;
+        const updatedPriority = priority !== undefined ? priority : task.priority;
+
+        // Validate title if it was provided
+        if (title !== undefined && (!title || typeof title !== 'string' || title.trim() === '')) {
+            return res.status(400).json({ error: 'title cannot be empty' });
+        }
+
+        const stmt = db.prepare(`
+      UPDATE tasks 
+      SET title = ?, description = ?, status = ?, priority = ?, updated_at = (datetime('now'))
+      WHERE id = ?
+    `);
+
+        stmt.run(updatedTitle, updatedDescription, updatedStatus, updatedPriority, id);
+
+        const updatedTask = db.prepare('SELECT * FROM tasks WHERE id = ?').get(id);
+        res.json(updatedTask);
+    } catch (err) {
+        if (err.message.includes('CHECK constraint failed')) {
+            return res.status(400).json({ error: 'Invalid status or priority value' });
+        }
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
