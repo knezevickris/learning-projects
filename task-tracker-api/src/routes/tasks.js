@@ -117,4 +117,18 @@ router.put('/:id', (req, res) => {
     }
 });
 
+// DELETE /tasks/:id - Deletes a task
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    try {
+        const info = db.prepare('DELETE FROM tasks WHERE id = ?').run(id);
+        if (info.changes === 0) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.status(204).send(); // No content
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
