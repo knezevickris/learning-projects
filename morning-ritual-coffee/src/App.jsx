@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Menu from './components/Menu'
+import Gallery from './components/Gallery'
 import Testimonials from './components/Testimonials'
 import About from './components/About'
 import Reservation from './components/Reservation'
@@ -14,6 +15,7 @@ function App() {
       <Navbar />
       <Hero />
       <Menu />
+      <Gallery />
       <Testimonials />
       <About />
       <Reservation />
