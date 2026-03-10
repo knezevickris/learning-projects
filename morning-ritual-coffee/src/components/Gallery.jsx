@@ -18,7 +18,7 @@ export default function Gallery() {
             id: 3,
             title: "The Swan's Grace",
             description: "Intricate details for our most discerning guests.",
-            url: "https://images.unsplash.com/photo-1541167760496-16295508e1f3?q=80&w=1000&auto=format&fit=crop",
+            url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1000&auto=format&fit=crop",
             span: "md:col-span-1 md:row-span-1",
         },
         {
@@ -49,23 +49,20 @@ export default function Gallery() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-none md:grid-rows-3 gap-6 h-auto md:h-[800px]">
+                <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-none md:grid-rows-3 gap-6 h-auto md:h-[600px]">
                     {photos.map((photo) => (
                         <div
                             key={photo.id}
                             className={`group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer ${photo.span}`}
                         >
-                            {/* Image Placeholder */}
-                            <div className="absolute inset-0 bg-coffee-200 animate-pulse group-hover:scale-110 transition-transform duration-700 ease-out">
+                            {/* Image Container */}
+                            <div className="absolute inset-0 group-hover:scale-110 transition-transform duration-700 ease-out">
                                 <img
                                     src={photo.url}
                                     alt={photo.title}
-                                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                                    className="w-full h-full object-cover opacity-100 transition-opacity duration-500"
                                 />
                             </div>
-
-                            {/* Overlay Gradient */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
 
                             {/* Content */}
                             <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
