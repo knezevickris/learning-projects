@@ -17,6 +17,7 @@ export default function Navbar() {
         { name: 'Menu', href: '#menu' },
         { name: 'Testimonials', href: '#testimonials' },
         { name: 'Our Story', href: '#about' },
+        { name: 'Reservation', href: '#reservation' },
         { name: 'Find Us', href: '#contact' },
     ];
 
