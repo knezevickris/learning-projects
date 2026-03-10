@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+    /* Warm Coffee Color Palette */
+    --color-coffee-900: #2c1e16;
+    /* Deep espresso - main text */
+    --color-coffee-800: #4a3628;
+    /* Dark roast - secondary borders/text */
+    --color-coffee-600: #8b5a33;
+    /* Milk chocolate - secondary buttons/accents */
+    --color-coffee-400: #c98d63;
+    /* Caramel - lighter accents */
+    --color-coffee-100: #eaddd3;
+    /* Latte froth - card backgrounds */
+
+    --color-cream-base: #faf6f0;
+    /* Off-white warm background */
+    --color-terracotta: #d97757;
+    /* Warm, inviting vibrant CTA button color */
+    --color-gold: #d4a373;
+    /* Subtle golden highlight */
+
+    /* Typography */
+    --font-heading: "Playfair Display", serif;
+    --font-body: "Inter", sans-serif;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--color-cream-base);
+        color: var(--color-coffee-900);
+        font-family: var(--font-body);
+        /* Improve text rendering */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-heading);
+    }
+}
+
+@layer utilities {
+    .text-shadow {
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+}
