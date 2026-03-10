@@ -15,6 +15,7 @@ export default function Navbar() {
 
     const navLinks = [
         { name: 'Menu', href: '#menu' },
+        { name: 'Gallery', href: '#gallery' },
         { name: 'Testimonials', href: '#testimonials' },
         { name: 'Our Story', href: '#about' },
         { name: 'Reservation', href: '#reservation' },
