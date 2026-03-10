@@ -30,4 +30,18 @@ router.get('/', (req, res) => {
     }
 });
 
+// GET /tasks/:id - Returns a single task by ID
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    try {
+        const task = db.prepare('SELECT * FROM tasks WHERE id = ?').get(id);
+        if (!task) {
+            return res.status(404).json({ error: 'Task not found' });
+        }
+        res.json(task);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
