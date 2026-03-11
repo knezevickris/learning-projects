@@ -35,16 +35,21 @@ const BookmarkList = ({ bookmarks, loading, onToggleFavorite, onEdit, onDelete }
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {bookmarks.map((bookmark) => (
-        <BookmarkCard 
-          key={bookmark.id}
-          bookmark={bookmark}
-          onToggleFavorite={onToggleFavorite}
-          onEdit={onEdit}
-          onDelete={onDelete}
-        />
-      ))}
+    <div>
+      <div className="text-sm text-gray-600 font-medium mb-4">
+        {bookmarks.length} bookmarks · {bookmarks.filter((bookmark) => bookmark.is_favorite).length} favorites
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {bookmarks.map((bookmark) => (
+          <BookmarkCard 
+            key={bookmark.id}
+            bookmark={bookmark}
+            onToggleFavorite={onToggleFavorite}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </div>
     </div>
   );
 };

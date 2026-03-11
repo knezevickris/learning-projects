@@ -21,6 +21,7 @@ function App() {
   const [editingBookmark, setEditingBookmark] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sortOption, setSortOption] = useState('title'); // Default sorting by title
 
   // When searchQuery changes, wait 300ms before updating debouncedSearch
   useEffect(() => {
@@ -116,6 +117,21 @@ function App() {
     }
   };
 
+  // Sort bookmarks based on selected option
+  const sortedBookmarks = [...bookmarks].sort((a, b) => {
+    if (sortOption === 'title') {
+      return a.title.localeCompare(b.title);
+    } else if (sortOption === 'date') {
+      return new Date(b.dateAdded) - new Date(a.dateAdded);
+    } else if (sortOption === 'favorite') {
+      return b.is_favorite - a.is_favorite;
+    }
+    return 0;
+  });
+
+  // Calculate bookmark counts
+  const totalBookmarks = bookmarks.length;
+  const favoriteBookmarks = bookmarks.filter((bookmark) => bookmark.is_favorite).length;
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -127,6 +143,8 @@ function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        totalBookmarks={totalBookmarks}
+        favoriteBookmarks={favoriteBookmarks}
       />
       
       <div className="flex flex-1">
@@ -151,9 +169,7 @@ function App() {
                   <h2 className="text-2xl font-bold text-gray-900">
                     {searchQuery ? `Search: "${searchQuery}"` : showFavorites ? 'Favorite Bookmarks' : selectedTag ? `Tag: ${selectedTag}` : 'All Bookmarks'}
                   </h2>
-                  <p className="text-gray-500 text-sm">
-                    {loading ? 'Fetching...' : `${bookmarks.length} links`}
-                  </p>
+                  
                 </div>
               </div>
             </div>
@@ -169,9 +185,36 @@ function App() {
                 </div>
               </div>
             )}
+            Sort by:<br/><br/>
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex gap-2">
+                
+                <button 
+                  onClick={() => setSortOption('title')}
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2
+                  ${sortOption === 'title' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-900'}`}
+                >
+                  Title
+                </button>
+                <button 
+                  onClick={() => setSortOption('date')}
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2
+                  ${sortOption === 'date' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-900'}`}
+                >
+                  Date
+                </button>
+                <button 
+                  onClick={() => setSortOption('favorite')}
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2
+                  ${sortOption === 'favorite' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-900'}`}
+                >
+                  Favorite
+                </button>
+              </div>
+            </div>
 
             <BookmarkList 
-              bookmarks={bookmarks}
+              bookmarks={sortedBookmarks}
               loading={loading}
               onToggleFavorite={handleToggleFavorite}
               onEdit={handleEdit}
