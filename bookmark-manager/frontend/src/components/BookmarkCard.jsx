@@ -54,7 +54,7 @@ const BookmarkCard = ({ bookmark, onToggleFavorite, onEdit, onDelete }) => {
         )}
       </div>
 
-      <div className="absolute bottom-5 left-5 right-5 flex justify-end gap-2 border-t pt-4 border-gray-50 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+      <div className="absolute bottom-5 left-5 right-5 flex justify-end gap-2 border-t pt-4 border-gray-50 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity translate-y-0 sm:translate-y-2 sm:group-hover:translate-y-0 duration-300">
         <button
           onClick={() => onEdit(bookmark)}
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-primary-50 hover:text-primary-700 rounded-lg transition-all"
