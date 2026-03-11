@@ -20,6 +20,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBookmark, setEditingBookmark] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // When searchQuery changes, wait 300ms before updating debouncedSearch
   useEffect(() => {
@@ -115,10 +116,6 @@ function App() {
     }
   };
 
-  const filteredBookmarks = bookmarks.filter(b => 
-    b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    b.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -129,6 +126,7 @@ function App() {
         }} 
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
       />
       
       <div className="flex flex-1">
@@ -138,6 +136,8 @@ function App() {
           setSelectedTag={setSelectedTag}
           showFavorites={showFavorites}
           setShowFavorites={setShowFavorites}
+          isOpen={isSidebarOpen}
+          setIsOpen={setIsSidebarOpen}
         />
 
         <main className="flex-1 p-6 md:p-8">
@@ -152,7 +152,7 @@ function App() {
                     {searchQuery ? `Search: "${searchQuery}"` : showFavorites ? 'Favorite Bookmarks' : selectedTag ? `Tag: ${selectedTag}` : 'All Bookmarks'}
                   </h2>
                   <p className="text-gray-500 text-sm">
-                    {loading ? 'Fetching...' : `${filteredBookmarks.length} links`}
+                    {loading ? 'Fetching...' : `${bookmarks.length} links`}
                   </p>
                 </div>
               </div>
