@@ -4,7 +4,7 @@ const Navbar = ({ onAddClick, searchQuery, setSearchQuery, toggleSidebar }) => {
   return (
     <nav className="bg-white border-b sticky top-0 z-10 px-4 py-3 flex items-center justify-between shadow-sm">
       <div className="flex items-center gap-2">
-        <button 
+        <button
           onClick={toggleSidebar}
           className="p-2 md:hidden hover:bg-gray-100 rounded-lg transition-colors"
         >
@@ -15,7 +15,7 @@ const Navbar = ({ onAddClick, searchQuery, setSearchQuery, toggleSidebar }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
           </svg>
         </div>
-        <h1 className="text-xl font-bold text-gray-900 hidden sm:block tracking-tight">Bookmarks</h1>
+        <h1 className="text-xl font-bold text-gray-900 hidden sm:block tracking-tight">Bookmarks Manager</h1>
       </div>
 
       <div className="flex-1 max-w-2xl mx-6">
