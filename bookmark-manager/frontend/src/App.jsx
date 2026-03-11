@@ -12,16 +12,27 @@ function App() {
   const [bookmarks, setBookmarks] = useState([]);
   const [tags, setTags] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedTag, setSelectedTag] = useState(null);
   const [showFavorites, setShowFavorites] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBookmark, setEditingBookmark] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
 
+  // When searchQuery changes, wait 300ms before updating debouncedSearch
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // When filters or debounced search changes, fetch new data from server
   useEffect(() => {
     fetchData();
-  }, [selectedTag, showFavorites]);
+  }, [selectedTag, showFavorites, debouncedSearch]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -29,8 +40,18 @@ function App() {
     try {
       let url = `${API_BASE_URL}/bookmarks`;
       const params = new URLSearchParams();
-      if (selectedTag) params.append('tag', selectedTag);
-      if (showFavorites) params.append('favorite', 'true');
+
+      if (debouncedSearch) {
+        // Use Global Search if a query is present
+        url = `${API_BASE_URL}/bookmarks/search`;
+        params.append('q', debouncedSearch);
+        // Clear other filters for clean search results
+        setSelectedTag(null);
+        setShowFavorites(false);
+      } else {
+        if (selectedTag) params.append('tag', selectedTag);
+        if (showFavorites) params.append('favorite', 'true');
+      }
       
       const [bookmarksRes, tagsRes] = await Promise.all([
         axios.get(`${url}?${params.toString()}`),
@@ -64,6 +85,7 @@ function App() {
   };
 
   const handleSave = async (formData) => {
+    setIsSaving(true);
     try {
       if (editingBookmark) {
         await axios.put(`${API_BASE_URL}/bookmarks/${editingBookmark.id}`, formData);
@@ -75,7 +97,10 @@ function App() {
       fetchData();
     } catch (err) {
       console.error('Error saving bookmark:', err);
-      alert('Failed to save bookmark. Please try again.');
+      const msg = err.response?.data?.error || 'Failed to save bookmark. Please try again.';
+      alert(msg);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -124,10 +149,10 @@ function App() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">
-                    {showFavorites ? 'Favorite Bookmarks' : selectedTag ? `Tag: ${selectedTag}` : 'All Bookmarks'}
+                    {searchQuery ? `Search: "${searchQuery}"` : showFavorites ? 'Favorite Bookmarks' : selectedTag ? `Tag: ${selectedTag}` : 'All Bookmarks'}
                   </h2>
                   <p className="text-gray-500 text-sm">
-                    {loading ? 'Crunching data...' : `${filteredBookmarks.length} links found`}
+                    {loading ? 'Fetching...' : `${filteredBookmarks.length} links`}
                   </p>
                 </div>
               </div>
@@ -146,7 +171,7 @@ function App() {
             )}
 
             <BookmarkList 
-              bookmarks={filteredBookmarks}
+              bookmarks={bookmarks}
               loading={loading}
               onToggleFavorite={handleToggleFavorite}
               onEdit={handleEdit}
@@ -159,11 +184,14 @@ function App() {
       <BookmarkModal 
         isOpen={isModalOpen}
         onClose={() => {
-          setIsModalOpen(false);
-          setEditingBookmark(null);
+          if (!isSaving) {
+            setIsModalOpen(false);
+            setEditingBookmark(null);
+          }
         }}
         onSave={handleSave}
         bookmark={editingBookmark}
+        isSaving={isSaving}
       />
     </div>
   );

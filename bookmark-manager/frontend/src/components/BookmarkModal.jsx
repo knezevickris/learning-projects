@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Globe, Type, AlignLeft, Tag, Star } from 'lucide-react';
 
-const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
+const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null, isSaving = false }) => {
   const [formData, setFormData] = useState({
     url: '',
     title: '',
@@ -38,6 +38,7 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isSaving) return;
     setError('');
 
     // Basic Validation (Matching Backend)
@@ -71,7 +72,11 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
           <h2 className="text-xl font-bold text-gray-900">
             {bookmark ? 'Edit Bookmark' : 'Add New Bookmark'}
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-200 rounded-full transition-colors">
+          <button 
+            onClick={onClose} 
+            disabled={isSaving}
+            className="p-2 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50"
+          >
             <X className="w-5 h-5 text-gray-500" />
           </button>
         </div>
@@ -95,7 +100,8 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
               <input
                 type="text"
                 placeholder="https://example.com"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium"
+                disabled={isSaving}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium disabled:opacity-50"
                 value={formData.url}
                 onChange={(e) => setFormData({ ...formData, url: e.target.value })}
                 required
@@ -111,7 +117,8 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
               <input
                 type="text"
                 placeholder="Bookmark Title"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium"
+                disabled={isSaving}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium disabled:opacity-50"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 required
@@ -126,7 +133,8 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
               </label>
               <textarea
                 placeholder="Optional description..."
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium h-24 resize-none"
+                disabled={isSaving}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium h-24 resize-none disabled:opacity-50"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               />
@@ -141,14 +149,15 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
               <input
                 type="text"
                 placeholder="design, dev, tools"
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium"
+                disabled={isSaving}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-primary-500 transition-all font-medium disabled:opacity-50"
                 value={formData.tags}
                 onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
               />
             </div>
 
             {/* Favorite Toggle */}
-            <label className="flex items-center gap-3 cursor-pointer group select-none">
+            <label className={`flex items-center gap-3 cursor-pointer group select-none ${isSaving ? 'opacity-50 pointer-events-none' : ''}`}>
               <div 
                 className={`w-12 h-6 rounded-full transition-all relative ${formData.is_favorite ? 'bg-yellow-400' : 'bg-gray-200'}`}
                 onClick={() => setFormData({ ...formData, is_favorite: !formData.is_favorite })}
@@ -167,15 +176,27 @@ const BookmarkModal = ({ isOpen, onClose, onSave, bookmark = null }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-bold transition-all"
+              disabled={isSaving}
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-bold transition-all disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold shadow-lg shadow-primary-200 transition-all active:scale-95"
+              disabled={isSaving}
+              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-bold shadow-lg shadow-primary-200 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {bookmark ? 'Update' : 'Save Bookmark'}
+              {isSaving ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Saving...
+                </span>
+              ) : (
+                bookmark ? 'Update' : 'Save Bookmark'
+              )}
             </button>
           </div>
         </form>
