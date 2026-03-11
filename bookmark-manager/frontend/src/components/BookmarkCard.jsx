@@ -41,7 +41,7 @@ const BookmarkCard = ({ bookmark, onToggleFavorite, onEdit, onDelete }) => {
       </p>
 
       <div className="flex flex-wrap gap-1.5 mb-16">
-        {bookmark.tags.map((tag) => (
+        {bookmark.tags && bookmark.tags.map((tag) => (
           <span
             key={tag}
             className="px-2.5 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded-md border border-gray-200 hover:bg-white hover:border-primary-300 hover:text-primary-600 transition-all cursor-default"
@@ -49,7 +49,7 @@ const BookmarkCard = ({ bookmark, onToggleFavorite, onEdit, onDelete }) => {
             {tag}
           </span>
         ))}
-        {bookmark.tags.length === 0 && (
+        {(!bookmark.tags || bookmark.tags.length === 0) && (
           <span className="text-[10px] text-gray-300 font-medium">No tags</span>
         )}
       </div>

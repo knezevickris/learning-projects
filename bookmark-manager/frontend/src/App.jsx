@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import BookmarkList from './components/BookmarkList';
+import BookmarkModal from './components/BookmarkModal';
 import { LayoutGrid, AlertCircle } from 'lucide-react';
 
 const API_BASE_URL = 'http://localhost:5000';
@@ -15,6 +16,8 @@ function App() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingBookmark, setEditingBookmark] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -56,8 +59,24 @@ function App() {
   };
 
   const handleEdit = (bookmark) => {
-    console.log('Edit clicked for:', bookmark);
-    // Modal implementation will go here in next step
+    setEditingBookmark(bookmark);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = async (formData) => {
+    try {
+      if (editingBookmark) {
+        await axios.put(`${API_BASE_URL}/bookmarks/${editingBookmark.id}`, formData);
+      } else {
+        await axios.post(`${API_BASE_URL}/bookmarks`, formData);
+      }
+      setIsModalOpen(false);
+      setEditingBookmark(null);
+      fetchData();
+    } catch (err) {
+      console.error('Error saving bookmark:', err);
+      alert('Failed to save bookmark. Please try again.');
+    }
   };
 
   const handleDelete = async (id) => {
@@ -79,7 +98,10 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <Navbar 
-        onAddClick={() => console.log('Add clicked')} 
+        onAddClick={() => {
+          setEditingBookmark(null);
+          setIsModalOpen(true);
+        }} 
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
@@ -133,6 +155,16 @@ function App() {
           </div>
         </main>
       </div>
+
+      <BookmarkModal 
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingBookmark(null);
+        }}
+        onSave={handleSave}
+        bookmark={editingBookmark}
+      />
     </div>
   );
 }
