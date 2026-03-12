@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   output: "export",
+  images: {
+    unoptimized: true,
+  },
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   // Optional: Change links to include .html (for true static hosting without clean URLs support)
   // trailingSlash: true,
