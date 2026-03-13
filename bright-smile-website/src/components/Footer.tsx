@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 
@@ -80,6 +82,16 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-10 border-t flex flex-col md:flex-row justify-between items-center opacity-60 text-[12px]">
           <p>© {new Date().getFullYear()} {siteConfig.fullName}. All rights reserved.</p>
+          
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="mt-6 md:mt-0 w-10 h-10 bg-dental-50 dark:bg-dental-900/50 rounded-full flex items-center justify-center hover:bg-dental-100 dark:hover:bg-dental-800 transition-colors shadow-sm group"
+            aria-label="Back to top"
+          >
+            <svg className="w-5 h-5 text-dental-600 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 15l7-7 7 7" />
+            </svg>
+          </button>
         </div>
       </div>
     </footer>

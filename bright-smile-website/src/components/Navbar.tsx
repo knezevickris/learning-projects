@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 
@@ -29,28 +30,20 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "glass-nav py-2" : "bg-transparent py-4"
-      }`}
+      className="absolute top-0 w-full z-50 py-6 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 rounded-xl bg-dental-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <svg 
-                className="w-6 h-6 text-white" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2.5" 
-                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
-                />
-              </svg>
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="relative w-12 h-12 rounded-xl bg-white dark:bg-dental-800 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform overflow-hidden p-1.5 border border-dental-100 dark:border-dental-700">
+              <Image 
+                src="/images/logo.png" 
+                alt={siteConfig.name} 
+                width={40} 
+                height={40}
+                className="object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold tracking-tight text-dental-700 dark:text-white leading-none">

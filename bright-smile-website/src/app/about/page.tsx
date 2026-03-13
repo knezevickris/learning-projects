@@ -86,13 +86,13 @@ export default function AboutPage() {
 
           <div className="space-y-24">
             {/* Dr. Chen */}
-            <div className="grid lg:grid-cols-12 gap-12 items-start">
-              <div className="lg:col-span-4 lg:sticky lg:top-32">
-                 <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
+            <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
+              <div className="md:col-span-12 lg:col-span-4 lg:sticky lg:top-32 flex justify-center lg:block">
+                 <div className="relative w-full max-w-[450px] lg:max-w-none aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
                     <NextImage src="/images/team/marcus.png" alt="Dr. Marcus Chen" fill className="object-cover" />
                  </div>
               </div>
-              <div className="lg:col-span-8 pt-4">
+              <div className="md:col-span-12 lg:col-span-8 pt-4">
                 <span className="text-dental-600 font-bold uppercase tracking-widest text-sm mb-2 block">General & Cosmetic Dentistry</span>
                 <h3 className="text-4xl font-extrabold text-dental-700 dark:text-white mb-6">Dr. Marcus Chen, DDS</h3>
                 <div className="space-y-6 text-lg text-foreground/70 leading-relaxed">
@@ -110,8 +110,8 @@ export default function AboutPage() {
             </div>
 
             {/* Dr. Rivera */}
-            <div className="grid lg:grid-cols-12 gap-12 items-start pt-16 border-t border-dental-50 dark:border-dental-900/10">
-              <div className="lg:col-span-8 pt-4 order-2 lg:order-1">
+            <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start pt-16 border-t border-dental-50 dark:border-dental-900/10">
+              <div className="md:col-span-12 lg:col-span-8 pt-4 order-2 lg:order-1">
                 <span className="text-dental-600 font-bold uppercase tracking-widest text-sm mb-2 block text-left lg:text-right">Orthodontics & Invisalign</span>
                 <h3 className="text-4xl font-extrabold text-dental-700 dark:text-white mb-6 text-left lg:text-right">Dr. Sarah Rivera, DMD</h3>
                 <div className="space-y-6 text-lg text-foreground/70 leading-relaxed text-left lg:text-right">
@@ -126,8 +126,8 @@ export default function AboutPage() {
                   </blockquote>
                 </div>
               </div>
-              <div className="lg:col-span-4 lg:sticky lg:top-32 order-1 lg:order-2">
-                 <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
+              <div className="md:col-span-12 lg:col-span-4 lg:sticky lg:top-32 order-1 lg:order-2 flex justify-center lg:block">
+                 <div className="relative w-full max-w-[450px] lg:max-w-none aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
                     <NextImage src="/images/team/sarah.png" alt="Dr. Sarah Rivera" fill className="object-cover" />
                  </div>
               </div>
