@@ -2,6 +2,7 @@ import PageHeader from "@/components/ui/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TestimonialCard from "@/components/ui/TestimonialCard";
 import Button from "@/components/ui/Button";
+import { siteConfig } from "@/config/site";
 
 const reviews = [
   {
@@ -62,7 +63,7 @@ export default function ReviewsPage() {
       <PageHeader
         title="Patient Reviews"
         subtitle="Success Stories"
-        description="See why thousands of Riverside families trust Bright Smile for their dental care. Real stories from real patients."
+        description={`See why thousands of ${siteConfig.contact.address.split(',')[1].trim().split(' ')[0]} families trust ${siteConfig.name} for their dental care. Real stories from real patients.`}
       />
 
       {/* Ratings Summary Section */}
@@ -74,7 +75,7 @@ export default function ReviewsPage() {
                 Our Patients Love Us
               </h2>
               <div className="flex items-center justify-center md:justify-start space-x-2 mb-4">
-                <span className="text-5xl font-extrabold text-dental-700 dark:text-accent-400">4.9</span>
+                <span className="text-5xl font-extrabold text-dental-700 dark:text-accent-400">{siteConfig.stats.rating}</span>
                 <div className="flex flex-col">
                   <div className="flex text-yellow-500">
                     {[...Array(5)].map((_, i) => (
@@ -83,7 +84,7 @@ export default function ReviewsPage() {
                       </svg>
                     ))}
                   </div>
-                  <span className="text-sm text-foreground/60 font-medium">Based on 5,000+ Google Reviews</span>
+                  <span className="text-sm text-foreground/60 font-medium">Based on {siteConfig.stats.reviewCount} Google Reviews</span>
                 </div>
               </div>
             </div>

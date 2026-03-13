@@ -2,14 +2,15 @@ import PageHeader from "@/components/ui/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TeamMember from "@/components/ui/TeamMember";
 import NextImage from "next/image";
+import { siteConfig } from "@/config/site";
 
 export default function AboutPage() {
   return (
     <main className="flex flex-col w-full">
       <PageHeader
         title="Our Story"
-        subtitle="About Bright Smile"
-        description="Founded with a vision to revolutionize the dental experience, we combine advanced technology with a compassionate, patient-first approach in the heart of Riverside."
+        subtitle={`About ${siteConfig.name}`}
+        description={`Founded with a vision to revolutionize the dental experience, we combine advanced technology with a compassionate, patient-first approach in the heart of ${siteConfig.contact.address.split(',')[1].trim().split(' ')[0]}.`}
       />
 
       {/* Origin/Mission Section */}
@@ -19,19 +20,19 @@ export default function AboutPage() {
             <div className="relative aspect-video lg:aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl">
               <NextImage
                 src="/images/team/team-photo.png"
-                alt="BrightSmile Team"
+                alt={`${siteConfig.name} Team`}
                 fill
                 className="object-cover object-top"
               />
             </div>
             <div>
               <SectionHeading
-                subtitle="Since 2014"
-                title="A Legacy of Care in Riverside"
+                subtitle={`Since ${parseInt(new Date().getFullYear().toString()) - parseInt(siteConfig.stats.experienceYears)}`}
+                title={`A Legacy of Care in ${siteConfig.contact.address.split(',')[1].trim().split(' ')[0]}`}
               />
               <div className="mt-8 space-y-6 text-lg text-foreground/70 leading-relaxed font-light">
                 <p>
-                  Bright Smile Dental was founded in 2014 in Riverside, CA, by visionary dentists who believed that high-quality dental care should be both accessible and completely stress-free. What started as a small community clinic has grown into a state-of-the-art practice, yet our founding principle remains the same: <span className="text-dental-700 dark:text-accent-400 font-medium">every patient is treated like family.</span>
+                  {siteConfig.fullName} was founded in {siteConfig.contact.address.split(',')[1].trim()}, {siteConfig.contact.address.split(',')[2].trim().split(' ')[0]}, by visionary dentists who believed that high-quality dental care should be both accessible and completely stress-free. What started as a small community clinic has grown into a state-of-the-art practice, yet our founding principle remains the same: <span className="text-dental-700 dark:text-accent-400 font-medium">every patient is treated like family.</span>
                 </p>
                 <p>
                   Our mission is simple but profound: to deliver exceptional dentistry that not only brightens smiles but builds lasting confidence. We understand that visiting the dentist can be daunting, which is why we've designed our practice to be a sanctuary of comfort and professional excellence.
@@ -96,10 +97,10 @@ export default function AboutPage() {
                 <h3 className="text-4xl font-extrabold text-dental-700 dark:text-white mb-6">Dr. Marcus Chen, DDS</h3>
                 <div className="space-y-6 text-lg text-foreground/70 leading-relaxed">
                   <p>
-                    With over 12 years of clinical experience, Dr. Marcus Chen leads Bright Smile with a vision of "patient-first" dentistry. A graduate of San Francisco's top dental programs, he specializes in comprehensive smile makeovers and advanced preventive care.
+                    With over {siteConfig.stats.experienceYears.replace('+', '')} years of clinical experience, Dr. Marcus Chen leads {siteConfig.name} with a vision of "patient-first" dentistry. A graduate of San Francisco's top dental programs, he specializes in comprehensive smile makeovers and advanced preventive care.
                   </p>
                   <p>
-                    Dr. Chen has successfully transformed over 2,000 smiles, utilizing the latest digital records and 3D imaging technology to achieve natural, lasting results. His philosophy is rooted in the belief that a healthy smile is the foundation of overall confidence.
+                    Dr. Chen has successfully transformed over {siteConfig.stats.smilesTransformed} smiles, utilizing the latest digital records and 3D imaging technology to achieve natural, lasting results. His philosophy is rooted in the belief that a healthy smile is the foundation of overall confidence.
                   </p>
                   <blockquote className="border-l-4 border-accent-400 pl-6 italic text-dental-700 dark:text-accent-400 py-2">
                     "I love helping patients regain their self-assurance through healthy, beautiful dentistry. My goal is to make every visit the highlight of your day."
@@ -118,7 +119,7 @@ export default function AboutPage() {
                     Dr. Sarah Rivera brings 8 years of specialized experience in orthodontics and Invisalign therapy. She is passionate about the intersection of dental health and facial aesthetics, ensuring every alignment treatment contributes to a balanced, radiant face.
                   </p>
                   <p>
-                    With advanced certifications in clear aligner technology, Sarah tailors treatments for patients of all ages—from children's early intervention to adult cosmetic alignment. Her focus on minimal discomfort and optimal precision has made her a favorite among Riverside families.
+                    With advanced certifications in clear aligner technology, Sarah tailors treatments for patients of all ages—from children's early intervention to adult cosmetic alignment. Her focus on minimal discomfort and optimal precision has made her a favorite among families in {siteConfig.contact.address.split(',')[1].trim().split(' ')[0]}.
                   </p>
                   <blockquote className="border-r-4 border-accent-400 pr-6 italic text-dental-700 dark:text-accent-400 py-2">
                     "Straightening smiles isn't just about teeth—it's about the joy of seeing someone finally smile without hesitation. Let's make yours perfect!"
@@ -161,7 +162,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <SectionHeading
-              subtitle="The Bright Smile Difference"
+              subtitle={`The ${siteConfig.name} Difference`}
               title="Why Choose Our Practice?"
               centered
             />
@@ -171,7 +172,7 @@ export default function AboutPage() {
             {[
               {
                 title: "Exceptional Ratings",
-                desc: "Over 5,000 happy patients have rated us 4.9/5 stars on Google, reflecting 12 years of dedicated dental excellence in Riverside.",
+                desc: `Over ${siteConfig.stats.reviewCount} happy patients have rated us ${siteConfig.stats.rating}/5 stars on Google, reflecting ${siteConfig.stats.experienceYears} of dedicated dental excellence in ${siteConfig.contact.address.split(',')[1].trim().split(' ')[0]}.`,
                 icon: (
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -207,7 +208,7 @@ export default function AboutPage() {
               },
               {
                 title: "Convenient Location",
-                desc: "Located in downtown Riverside (92501) with extended hours and same-day emergency support for your peace of mind.",
+                desc: `Located in downtown ${siteConfig.contact.address.split(',')[1].trim().split(' ')[0]} (${siteConfig.contact.address.split(',')[1].trim().split(' ')[1]}) with extended hours and same-day emergency support for your peace of mind.`,
                 icon: (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

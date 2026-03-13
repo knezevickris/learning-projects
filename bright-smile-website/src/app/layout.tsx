@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import { siteConfig } from "@/config/site";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -15,21 +17,24 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "BrightSmile Dental | Modern Care, Friendly Faces in Riverside, CA",
-  description: "Experience advanced dental care at BrightSmile Dental. Led by Dr. Sarah Chen & Dr. Marcus Rivera, we offer general, cosmetic, and orthodontic services in Riverside, CA.",
-  keywords: ["Dentist Riverside", "Cosmetic Dentistry", "Invisalign Riverside", "Orthodontics", "Dr. Sarah Chen", "Dr. Marcus Rivera", "Teeth Whitening Riverside", "Dental Implants"],
-  authors: [{ name: "BrightSmile Dental Team" }],
+  title: {
+    default: siteConfig.fullName,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: ["Dentist Riverside", "Cosmetic Dentistry", "Invisalign Riverside", "Orthodontics", "Dr. Marcus Chen", "Dr. Sarah Rivera", "Teeth Whitening Riverside", "Dental Implants"],
+  authors: [{ name: siteConfig.name }],
   openGraph: {
-    title: "BrightSmile Dental | Modern Care, Friendly Faces",
-    description: "Your destination for high-quality, compassionate dental care in Riverside, CA.",
-    url: "https://brightsmileriverside.com", // Placeholder URL
-    siteName: "BrightSmile Dental",
+    title: siteConfig.fullName,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     images: [
       {
-        url: "/og-image.jpg", // Placeholder image path
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "BrightSmile Dental Practice",
+        alt: siteConfig.name,
       },
     ],
     locale: "en_US",
@@ -37,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BrightSmile Dental | Riverside's Premier Practice",
-    description: "Modern care meets friendly faces. Book your appointment with our experts today.",
+    title: siteConfig.fullName,
+    description: siteConfig.description,
     images: ["/og-image.jpg"],
   },
   robots: {

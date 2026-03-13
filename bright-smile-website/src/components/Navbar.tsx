@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { siteConfig } from "@/config/site";
+
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
@@ -52,10 +54,10 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold tracking-tight text-dental-700 dark:text-white leading-none">
-                BrightSmile
+                {siteConfig.name}
               </span>
               <span className="text-[10px] uppercase tracking-widest text-dental-500 font-bold">
-                Dental Care
+                {siteConfig.tagline.split(",")[0]}
               </span>
             </div>
           </Link>

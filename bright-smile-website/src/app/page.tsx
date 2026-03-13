@@ -5,12 +5,13 @@ import ServiceCard from "@/components/ui/ServiceCard";
 import TestimonialCard from "@/components/ui/TestimonialCard";
 import TeamMember from "@/components/ui/TeamMember";
 import Button from "@/components/ui/Button";
+import { siteConfig } from "@/config/site";
 
 export default function Home() {
   return (
     <div className="flex flex-col w-full">
       <Hero
-        tagline="Modern Care, Friendly Faces"
+        tagline={siteConfig.tagline}
         headline={
           <>
             A Healthier <br />
@@ -18,14 +19,14 @@ export default function Home() {
             With Us
           </>
         }
-        description="Providing Riverside with world-class dental excellence since 2019. Join over 5,000 happy patients experiencing compassionate, expert care."
+        description={siteConfig.description}
         backgroundImage="/images/hero/hero-image.png"
         primaryCta={{ text: "Book an Appointment", href: "/contact" }}
         secondaryCta={{ text: "Our Services", href: "/services" }}
         stats={[
-          { value: "4.9/5", label: "Google Rating" },
-          { value: "12+", label: "Years Experience" },
-          { value: "5k+", label: "Happy Patients" },
+          { value: siteConfig.stats.rating.toString(), label: "Google Rating" },
+          { value: siteConfig.stats.experienceYears, label: "Years Experience" },
+          { value: siteConfig.stats.reviewCount, label: "Happy Patients" },
         ]}
       />
 
@@ -73,7 +74,7 @@ export default function Home() {
             
             {/* Aggregate Rating Badge */}
             <div className="flex items-center space-x-4 bg-dental-50 dark:bg-dental-900/20 p-6 rounded-2xl border border-dental-100 dark:border-dental-800">
-              <div className="text-4xl font-extrabold text-dental-600">4.9</div>
+              <div className="text-4xl font-extrabold text-dental-600">{siteConfig.stats.rating}</div>
               <div>
                 <div className="flex space-x-0.5 mb-1">
                   {[...Array(5)].map((_, i) => (
@@ -82,7 +83,7 @@ export default function Home() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-[10px] uppercase tracking-widest font-bold text-foreground/50">Based on 500+ Reviews</p>
+                <p className="text-[10px] uppercase tracking-widest font-bold text-foreground/50">Based on {siteConfig.stats.reviewCount} Reviews</p>
               </div>
             </div>
           </div>
@@ -91,12 +92,12 @@ export default function Home() {
             <TestimonialCard
               name="Anna P."
               role="Patient"
-              content="I was terrified of going to the dentist for years, but Bright Smile completely changed my view. The staff was incredibly gentle, explained every step, and my hygienist made me feel so at ease. I finally don't dread check-ups anymore—thank you!"
+              content={`I was terrified of going to the dentist for years, but ${siteConfig.name} completely changed my view. The staff was incredibly gentle, explained every step, and my hygienist made me feel so at ease. I finally don't dread check-ups anymore—thank you!`}
             />
             <TestimonialCard
               name="Marco D."
               role="Patient since 2021"
-              content="I've been coming to Bright Smile for almost 5 years now, and it's the most professional clinic I've ever been to. The doctors are transparent about treatment options and prices, and my whole family goes there now. Highly recommend!"
+              content={`I've been coming to ${siteConfig.name} for almost 5 years now, and it's the most professional clinic I've ever been to. The doctors are transparent about treatment options and prices, and my whole family goes there now. Highly recommend!`}
             />
             <TestimonialCard
               name="Elena M."
@@ -120,14 +121,14 @@ export default function Home() {
           <div className="relative w-full aspect-[21/9] md:aspect-video mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-dental-800">
             <NextImage
               src="/images/team/team-photo.png"
-              alt="BrightSmile Team"
+              alt={`${siteConfig.name} Team`}
               fill
               className="object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-dental-900/40 to-transparent" />
             <div className="absolute bottom-8 left-8 text-white">
               <p className="text-sm font-bold uppercase tracking-widest opacity-80 mb-1 text-accent-400">Our Experts</p>
-              <h3 className="text-3xl font-extrabold">The BrightSmile Family</h3>
+              <h3 className="text-3xl font-extrabold">The {siteConfig.name} Family</h3>
             </div>
           </div>
 
@@ -138,7 +139,7 @@ export default function Home() {
                 isLarge
                 name="Dr. Marcus Chen"
                 role="General & Cosmetic Dentistry"
-                bio="Dr. Chen leads our general and cosmetic dentistry with a patient-first approach, specializing in smile makeovers and preventive care. A graduate of top dental programs, he’s transformed over 2,000 smiles with natural, lasting results."
+                bio={`Dr. Chen leads our general and cosmetic dentistry with a patient-first approach, specializing in smile makeovers and preventive care. A graduate of top dental programs, he’s transformed over ${siteConfig.stats.smilesTransformed} smiles with natural, lasting results.`}
                 image="/images/team/marcus.png"
               />
               <TeamMember
@@ -184,8 +185,8 @@ export default function Home() {
               <span className="text-accent-400">Starts Today</span>
             </h2>
             <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Experience the perfect blend of modern technology and compassionate care. 
-              Join thousands of Riverside residents who trust BrightSmile with their dental health.
+              Experience {siteConfig.description.split('.')[0]}. 
+              Join thousands of {siteConfig.contact.address.split(',')[1].trim().split(' ')[0]} residents who trust {siteConfig.name} with their dental health.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -197,8 +198,8 @@ export default function Home() {
               </Button>
               <div className="flex flex-col items-center sm:items-start text-white/90">
                 <p className="text-sm uppercase tracking-widest font-bold opacity-60 mb-1">Or Call Us Directly</p>
-                <a href="tel:9515550187" className="text-2xl font-bold hover:text-accent-400 transition-colors">
-                  (951) 555-0187
+                <a href={siteConfig.contact.phoneUrl} className="text-2xl font-bold hover:text-accent-400 transition-colors">
+                  {siteConfig.contact.phone}
                 </a>
               </div>
             </div>

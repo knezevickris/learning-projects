@@ -1,6 +1,7 @@
 import PageHeader from "@/components/ui/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
 import NextImage from "next/image";
+import { siteConfig } from "@/config/site";
 
 export default function ServicesPage() {
   return (
@@ -8,7 +9,7 @@ export default function ServicesPage() {
       <PageHeader 
         title="Our Services"
         subtitle="Expert Dental Care"
-        description="Comprehensive treatments tailored to your unique needs. From routine check-ups to advanced cosmetic transformations, we provide world-class dental excellence in Riverside."
+        description={`Comprehensive treatments tailored to your unique needs. From routine check-ups to advanced cosmetic transformations, we provide world-class dental excellence in ${siteConfig.contact.address.split(',')[1].trim().split(' ')[0]}.`}
       />
 
       {/* General Dentistry Section */}
@@ -31,7 +32,7 @@ export default function ServicesPage() {
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32">
               <NextImage
                 src="/images/services/General-family-dentistry.png"
-                alt="General Dentistry at BrightSmile"
+                alt={`General Dentistry at ${siteConfig.name}`}
                 fill
                 className="object-cover"
               />
@@ -144,7 +145,7 @@ export default function ServicesPage() {
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32 order-1 lg:order-2">
               <NextImage
                 src="/images/services/cosmetic1.png"
-                alt="Cosmetic Dentistry at BrightSmile"
+                alt={`Cosmetic Dentistry at ${siteConfig.name}`}
                 fill
                 className="object-cover"
               />
@@ -174,7 +175,7 @@ export default function ServicesPage() {
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32">
               <NextImage
                 src="/images/services/invisalign1.png"
-                alt="Orthodontic Care at BrightSmile"
+                alt={`Orthodontic Care at ${siteConfig.name}`}
                 fill
                 className="object-cover"
               />

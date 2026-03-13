@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -6,13 +7,6 @@ const quickLinks = [
   { name: "About", href: "/about" },
   { name: "Reviews", href: "/reviews" },
   { name: "Contact", href: "/contact" },
-];
-
-const services = [
-  { name: "General Dentistry", href: "/services#general" },
-  { name: "Cosmetic Dentistry", href: "/services#cosmetic" },
-  { name: "Orthodontics", href: "/services#ortho" },
-  { name: "Teeth Whitening", href: "/services#whitening" },
 ];
 
 export default function Footer() {
@@ -25,15 +19,14 @@ export default function Footer() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-lg bg-dental-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg leading-none">S</span>
+                <span className="text-white font-bold text-lg leading-none">{siteConfig.name[0]}</span>
               </div>
               <span className="text-xl font-bold tracking-tight text-dental-700 dark:text-white">
-                BrightSmile
+                {siteConfig.name}
               </span>
             </Link>
             <p className="text-foreground/70 leading-relaxed text-sm">
-              Modern care, friendly faces. Providing Riverside with the highest quality
-              dental services since 2012.
+              {siteConfig.tagline}. {siteConfig.description}
             </p>
           </div>
 
@@ -55,18 +48,12 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-dental-700 dark:text-white mb-6">Business Hours</h3>
             <ul className="space-y-4">
-              <li className="flex justify-between text-sm">
-                <span className="text-foreground/70">Mon – Fri:</span>
-                <span className="font-medium">8:00am – 6:00pm</span>
-              </li>
-              <li className="flex justify-between text-sm">
-                <span className="text-foreground/70">Saturday:</span>
-                <span className="font-medium">9:00am – 2:00pm</span>
-              </li>
-              <li className="flex justify-between text-sm text-red-500">
-                <span>Sunday:</span>
-                <span>Closed</span>
-              </li>
+              {siteConfig.hours.map((item, idx) => (
+                <li key={idx} className={`flex justify-between text-sm ${item.closed ? 'text-red-500' : ''}`}>
+                  <span className="text-foreground/70">{item.days}:</span>
+                  <span className="font-medium">{item.time}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -76,15 +63,15 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start space-x-3 text-sm">
                 <svg className="w-5 h-5 text-dental-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                <span className="text-foreground/70">247 Oak Street,<br />Riverside, CA 92501</span>
+                <span className="text-foreground/70">{siteConfig.contact.address.split(',')[0]},<br />{siteConfig.contact.address.split(',')[1]}</span>
               </li>
               <li className="flex items-center space-x-3 text-sm">
                 <svg className="w-5 h-5 text-dental-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                <a href="tel:9515550187" className="text-foreground/70 hover:text-dental-600">(951) 555-0187</a>
+                <a href={siteConfig.contact.phoneUrl} className="text-foreground/70 hover:text-dental-600">{siteConfig.contact.phone}</a>
               </li>
               <li className="flex items-center space-x-3 text-sm">
                 <svg className="w-5 h-5 text-dental-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                <a href="mailto:hello@brightsmiledental.com" className="text-foreground/70 hover:text-dental-600">hello@brightsmiledental.com</a>
+                <a href={`mailto:${siteConfig.contact.email}`} className="text-foreground/70 hover:text-dental-600">{siteConfig.contact.email}</a>
               </li>
             </ul>
           </div>
@@ -92,7 +79,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-10 border-t flex flex-col md:flex-row justify-between items-center opacity-60 text-[12px]">
-          <p>© 2026 BrightSmile Dental Care. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {siteConfig.fullName}. All rights reserved.</p>
         </div>
       </div>
     </footer>
