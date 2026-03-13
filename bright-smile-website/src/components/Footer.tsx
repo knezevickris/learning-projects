@@ -17,10 +17,10 @@ const services = [
 
 export default function Footer() {
   return (
-    <footer className="bg-dental-50 dark:bg-zinc-950/50 pt-20 pb-10 border-t">
+    <footer className="bg-white dark:bg-[var(--background)] pt-20 pb-10 border-t transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          
+
           {/* Practice Info */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center space-x-2">
@@ -32,16 +32,9 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-foreground/70 leading-relaxed text-sm">
-              Modern care, friendly faces. Providing Riverside with the highest quality 
-              dental services since 2019.
+              Modern care, friendly faces. Providing Riverside with the highest quality
+              dental services since 2012.
             </p>
-            <div className="flex space-x-4">
-              {["FB", "TW", "IG", "LI"].map((social) => (
-                <div key={social} className="w-8 h-8 rounded-full bg-white dark:bg-zinc-800 border flex items-center justify-center text-[10px] font-bold text-foreground/40 hover:border-dental-500 hover:text-dental-600 cursor-pointer transition-all">
-                  {social}
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -100,10 +93,6 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-10 border-t flex flex-col md:flex-row justify-between items-center opacity-60 text-[12px]">
           <p>© 2026 BrightSmile Dental Care. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0 uppercase tracking-widest font-bold">
-            <Link href="/privacy" className="hover:text-dental-600">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-dental-600">Terms of Service</Link>
-          </div>
         </div>
       </div>
     </footer>

@@ -1,7 +1,10 @@
+import NextImage from "next/image";
 import Hero from "@/components/ui/Hero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ServiceCard from "@/components/ui/ServiceCard";
 import TestimonialCard from "@/components/ui/TestimonialCard";
+import TeamMember from "@/components/ui/TeamMember";
+import Button from "@/components/ui/Button";
 
 export default function Home() {
   return (
@@ -100,6 +103,112 @@ export default function Home() {
               role="New patient"
               content="I came in with a toothache late in the afternoon and they still managed to see me urgently. The diagnosis was accurate, the treatment was quick and painless, and the follow-up was thoughtful. Definitely worth the visit."
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Meet Our Doctors Section */}
+      <section className="py-24 bg-gradient-to-b from-white to-dental-50 dark:from-[var(--background)] dark:to-[var(--card)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            subtitle="Meet Our Team"
+            title="Expert Minds, Caring Hands"
+            centered
+          />
+
+          {/* Group Feature Photo */}
+          <div className="relative w-full h-[400px] mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-dental-800">
+            <NextImage
+              src="/images/team/team-photo.png"
+              alt="BrightSmile Team"
+              fill
+              className="object-cover object-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-dental-900/40 to-transparent" />
+            <div className="absolute bottom-8 left-8 text-white">
+              <p className="text-sm font-bold uppercase tracking-widest opacity-80 mb-1 text-accent-400">Our Experts</p>
+              <h3 className="text-3xl font-extrabold">The BrightSmile Family</h3>
+            </div>
+          </div>
+
+          <div className="space-y-16">
+            {/* Doctors Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <TeamMember
+                isLarge
+                name="Dr. Marcus Chen"
+                role="General & Cosmetic Dentistry"
+                bio="Dr. Chen leads our general and cosmetic dentistry with a patient-first approach, specializing in smile makeovers and preventive care. A graduate of top dental programs, he’s transformed over 2,000 smiles with natural, lasting results."
+                image="/images/team/marcus.png"
+              />
+              <TeamMember
+                isLarge
+                name="Dr. Sarah Rivera"
+                role="Orthodontics & Invisalign"
+                bio="Dr. Rivera excels in orthodontics and Invisalign, creating straighter smiles with comfort and precision. With advanced certifications, she tailors treatments for all ages, ensuring minimal discomfort and optimal outcomes."
+                image="/images/team/sarah.png"
+              />
+            </div>
+
+            {/* Assistants Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <TeamMember
+                isLarge
+                name="Emily Novak"
+                role="Dental Assistant"
+                bio="Emily brings warmth and efficiency to every visit, assisting with procedures and ensuring patient comfort. With 5 years in dentistry, she’s skilled in sterilization and making nervous patients feel at ease."
+                image="/images/team/emily.png"
+              />
+              <TeamMember
+                isLarge
+                name="Luke James"
+                role="Dental Assistant"
+                bio="Luke supports our team with expert X-ray tech and patient prep, drawing from 4 years of hands-on experience. His calm demeanor and attention to detail keep appointments smooth and stress-free."
+                image="/images/team/luke.png"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Banner */}
+      <section className="py-20 relative overflow-hidden">
+        {/* Background Accent */}
+        <div className="absolute inset-0 bg-dental-700 -z-10" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-accent-500/10 skew-x-12 translate-x-32 -z-10" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-8 leading-tight">
+              Your New Smile <br className="hidden sm:block" /> 
+              <span className="text-accent-400">Starts Today</span>
+            </h2>
+            <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Experience the perfect blend of modern technology and compassionate care. 
+              Join thousands of Riverside residents who trust BrightSmile with their dental health.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <Button 
+                href="/contact" 
+                className="!bg-white !text-dental-700 hover:!bg-accent-500 hover:!text-dental-900 !px-12 !py-6 !text-xl shadow-2xl transition-all"
+              >
+                Book Your First Visit
+              </Button>
+              <div className="flex flex-col items-center sm:items-start text-white/90">
+                <p className="text-sm uppercase tracking-widest font-bold opacity-60 mb-1">Or Call Us Directly</p>
+                <a href="tel:9515550187" className="text-2xl font-bold hover:text-accent-400 transition-colors">
+                  (951) 555-0187
+                </a>
+              </div>
+            </div>
+
+            {/* Micro-trust indicator */}
+            <div className="mt-16 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 grayscale brightness-200">
+               <span className="text-xs font-bold uppercase tracking-widest">Invisalign Provider</span>
+               <span className="text-xs font-bold uppercase tracking-widest">ADA Member</span>
+               <span className="text-xs font-bold uppercase tracking-widest">Emergency Care</span>
+            </div>
           </div>
         </div>
       </section>
