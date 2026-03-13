@@ -117,7 +117,7 @@ export default function Home() {
           />
 
           {/* Group Feature Photo */}
-          <div className="relative w-full h-[400px] mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-dental-800">
+          <div className="relative w-full aspect-[21/9] md:aspect-video mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-dental-800">
             <NextImage
               src="/images/team/team-photo.png"
               alt="BrightSmile Team"

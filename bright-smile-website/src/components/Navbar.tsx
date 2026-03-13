@@ -111,7 +111,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden absolute w-full bg-background border-b transition-all duration-300 ease-in-out ${
+        className={`md:hidden absolute w-full bg-white/98 dark:bg-[var(--background)]/98 backdrop-blur-md border-b transition-all duration-300 ease-in-out z-40 ${
           isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
         }`}
       >

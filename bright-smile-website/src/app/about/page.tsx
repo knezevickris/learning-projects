@@ -86,7 +86,7 @@ export default function AboutPage() {
           <div className="space-y-24">
             {/* Dr. Chen */}
             <div className="grid lg:grid-cols-12 gap-12 items-start">
-              <div className="lg:col-span-4 sticky top-32">
+              <div className="lg:col-span-4 lg:sticky lg:top-32">
                  <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
                     <NextImage src="/images/team/marcus.png" alt="Dr. Marcus Chen" fill className="object-cover" />
                  </div>
@@ -125,7 +125,7 @@ export default function AboutPage() {
                   </blockquote>
                 </div>
               </div>
-              <div className="lg:col-span-4 sticky top-32 order-1 lg:order-2">
+              <div className="lg:col-span-4 lg:sticky lg:top-32 order-1 lg:order-2">
                  <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
                     <NextImage src="/images/team/sarah.png" alt="Dr. Sarah Rivera" fill className="object-cover" />
                  </div>

@@ -17,7 +17,7 @@ export default function TeamMember({
 }: TeamMemberProps) {
   return (
     <div className={`group flex flex-col ${isLarge ? "md:flex-row gap-8 items-center" : "gap-4"}`}>
-      <div className={`relative overflow-hidden rounded-3xl border border-dental-100 dark:border-dental-800 shadow-md ${isLarge ? "w-full md:w-1/3 aspect-square" : "w-full aspect-[4/5]"}`}>
+      <div className={`relative overflow-hidden rounded-3xl border border-dental-100 dark:border-dental-800 shadow-md ${isLarge ? "w-full md:w-1/3 aspect-[4/5]" : "w-full aspect-[4/5]"}`}>
         <NextImage
           src={image}
           alt={name}
