@@ -20,7 +20,7 @@ export default function Home() {
           </>
         }
         description={siteConfig.description}
-        backgroundImage="/images/hero/hero-image.png"
+        backgroundImage="/images/hero/hero-image.webp"
         primaryCta={{ text: "Book an Appointment", href: "/contact" }}
         secondaryCta={{ text: "Our Services", href: "/services" }}
         stats={[
@@ -44,19 +44,19 @@ export default function Home() {
               title="General Dentistry"
               description="Keep your smile healthy with routine cleanings, fillings, crowns, and expert preventative care for the whole family."
               href="/services#general"
-              image="/images/services/General-family-dentistry.png"
+              image="/images/services/General-family-dentistry.webp"
             />
             <ServiceCard
               title="Cosmetic Dentistry"
               description="Transform your smile with professional whitening, porcelain veneers, and bonding for a confident, radiant look."
               href="/services#cosmetic"
-              image="/images/services/cosmetic-dentistry.png"
+              image="/images/services/cosmetic-dentistry.webp"
             />
             <ServiceCard
               title="Orthodontics"
               description="Straighten your teeth with Invisalign or traditional braces. We offer effective solutions for patients of all ages."
               href="/services#orthodontics"
-              image="/images/services/invisalign.png"
+              image="/images/services/invisalign.webp"
             />
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function Home() {
           {/* Group Feature Photo */}
           <div className="relative w-full aspect-[21/9] md:aspect-video mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-dental-800">
             <NextImage
-              src="/images/team/team-photo.png"
+              src="/images/team/team-photo.webp"
               alt={`${siteConfig.name} Team`}
               fill
               className="object-cover object-top"
@@ -140,14 +140,14 @@ export default function Home() {
                 name="Dr. Marcus Chen"
                 role="General & Cosmetic Dentistry"
                 bio={`Dr. Chen leads our general and cosmetic dentistry with a patient-first approach, specializing in smile makeovers and preventive care. A graduate of top dental programs, he’s transformed over ${siteConfig.stats.smilesTransformed} smiles with natural, lasting results.`}
-                image="/images/team/marcus.png"
+                image="/images/team/marcus.webp"
               />
               <TeamMember
                 isLarge
                 name="Dr. Sarah Rivera"
                 role="Orthodontics & Invisalign"
                 bio="Dr. Rivera excels in orthodontics and Invisalign, creating straighter smiles with comfort and precision. With advanced certifications, she tailors treatments for all ages, ensuring minimal discomfort and optimal outcomes."
-                image="/images/team/sarah.png"
+                image="/images/team/sarah.webp"
               />
             </div>
 
@@ -158,14 +158,14 @@ export default function Home() {
                 name="Emily Novak"
                 role="Dental Assistant"
                 bio="Emily brings warmth and efficiency to every visit, assisting with procedures and ensuring patient comfort. With 5 years in dentistry, she’s skilled in sterilization and making nervous patients feel at ease."
-                image="/images/team/emily.png"
+                image="/images/team/emily.webp"
               />
               <TeamMember
                 isLarge
                 name="Luke James"
                 role="Dental Assistant"
                 bio="Luke supports our team with expert X-ray tech and patient prep, drawing from 4 years of hands-on experience. His calm demeanor and attention to detail keep appointments smooth and stress-free."
-                image="/images/team/luke.png"
+                image="/images/team/luke.webp"
               />
             </div>
           </div>

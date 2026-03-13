@@ -31,7 +31,7 @@ export default function ServicesPage() {
             {/* Image side */}
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32">
               <NextImage
-                src="/images/services/General-family-dentistry.png"
+                src="/images/services/General-family-dentistry.webp"
                 alt={`General Dentistry at ${siteConfig.name}`}
                 fill
                 className="object-cover"
@@ -144,7 +144,7 @@ export default function ServicesPage() {
             {/* Image side - Right Sticky */}
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32 order-1 lg:order-2">
               <NextImage
-                src="/images/services/cosmetic1.png"
+                src="/images/services/cosmetic1.webp"
                 alt={`Cosmetic Dentistry at ${siteConfig.name}`}
                 fill
                 className="object-cover"
@@ -174,7 +174,7 @@ export default function ServicesPage() {
             {/* Image side - Back to Left Sticky for variety after Cosmetic's Right Sticky */}
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32">
               <NextImage
-                src="/images/services/invisalign1.png"
+                src="/images/services/invisalign1.webp"
                 alt={`Orthodontic Care at ${siteConfig.name}`}
                 fill
                 className="object-cover"

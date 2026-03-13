@@ -19,7 +19,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-video lg:aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl">
               <NextImage
-                src="/images/team/team-photo.png"
+                src="/images/team/team-photo.webp"
                 alt={`${siteConfig.name} Team`}
                 fill
                 className="object-cover object-top"
@@ -89,7 +89,7 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
               <div className="md:col-span-12 lg:col-span-4 lg:sticky lg:top-32 flex justify-center lg:block">
                  <div className="relative w-full max-w-[450px] lg:max-w-none aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
-                    <NextImage src="/images/team/marcus.png" alt="Dr. Marcus Chen" fill className="object-cover" />
+                    <NextImage src="/images/team/marcus.webp" alt="Dr. Marcus Chen" fill className="object-cover" />
                  </div>
               </div>
               <div className="md:col-span-12 lg:col-span-8 pt-4">
@@ -128,7 +128,7 @@ export default function AboutPage() {
               </div>
               <div className="md:col-span-12 lg:col-span-4 lg:sticky lg:top-32 order-1 lg:order-2 flex justify-center lg:block">
                  <div className="relative w-full max-w-[450px] lg:max-w-none aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white dark:border-dental-800">
-                    <NextImage src="/images/team/sarah.png" alt="Dr. Sarah Rivera" fill className="object-cover" />
+                    <NextImage src="/images/team/sarah.webp" alt="Dr. Sarah Rivera" fill className="object-cover" />
                  </div>
               </div>
             </div>
@@ -141,14 +141,14 @@ export default function AboutPage() {
                     isLarge
                     name="Emily Novak"
                     role="Lead Dental Assistant"
-                    image="/images/team/emily.png"
+                    image="/images/team/emily.webp"
                     bio="Emily brings over 5 years of warmth and clinical efficiency to every chairside visit. She is a specialist in sterilization protocols and patient preparation, but her true talent lies in making even the most nervous patients feel completely at home. Her meticulous attention to comfort ensures your visit is stress-free from start to finish."
                  />
                  <TeamMember
                     isLarge
                     name="Luke James"
                     role="Surgical & X-Ray Assistant"
-                    image="/images/team/luke.png"
+                    image="/images/team/luke.webp"
                     bio="Luke supports our clinical team with expert-level X-ray technology and hands-on preparation. With 4 years of experience, his calm demeanor and technical precision keep our appointments running like clockwork. Luke is passionate about patient education and helps walk you through your imaging results with clarity and care."
                  />
               </div>
