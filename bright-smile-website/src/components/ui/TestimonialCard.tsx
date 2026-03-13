@@ -12,13 +12,8 @@ export default function TestimonialCard({
   rating = 5,
 }: TestimonialCardProps) {
   return (
-    <div className="p-8 bg-white dark:bg-zinc-900 rounded-3xl border border-dental-100 dark:border-zinc-800 shadow-sm relative overflow-hidden">
-      {/* Quote Icon Backdrop */}
-      <div className="absolute top-4 right-6 text-dental-50 dark:text-dental-900/10 -scale-x-100">
-        <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-        </svg>
-      </div>
+    <div className="p-8 bg-white dark:bg-[var(--card)] rounded-3xl border border-dental-100 dark:border-zinc-800 shadow-sm relative overflow-hidden">
+
 
       <div className="relative z-10">
         <div className="flex space-x-1 mb-4">
@@ -28,11 +23,11 @@ export default function TestimonialCard({
             </svg>
           ))}
         </div>
-        
+
         <p className="text-foreground/80 italic leading-relaxed mb-6">
           "{content}"
         </p>
-        
+
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-full bg-accent-500/20 flex items-center justify-center text-accent-700 font-bold text-sm">
             {name.charAt(0)}

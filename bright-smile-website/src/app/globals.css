@@ -24,9 +24,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: oklch(0.18 0.02 220);
-    --foreground: oklch(0.95 0.01 220);
-    --card: oklch(0.22 0.02 220);
+    --background: oklch(0.22 0.03 225); /* Softer medical blue/grey */
+    --foreground: oklch(0.92 0.01 220);
+    --card: oklch(0.28 0.03 225);      /* Lighter card color for better depth */
     --primary: var(--color-dental-500);
   }
 }
@@ -37,6 +37,11 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  image-rendering: -webkit-optimize-contrast; /* Helps with 'crunchy' scaling in some browsers */
+  backface-visibility: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {

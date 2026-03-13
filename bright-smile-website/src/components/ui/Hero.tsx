@@ -38,7 +38,7 @@ export default function Hero({
           priority
         />
         {/* Multi-layered Overlay for Premium Feel */}
-        <div className="absolute inset-0 bg-gradient-to-r from-dental-900/90 via-dental-900/60 to-transparent dark:from-black/90 dark:via-black/60 dark:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-dental-900/90 via-dental-700/60 to-transparent dark:from-zinc-950 dark:via-zinc-900/60 dark:to-transparent" />
         <div className="absolute inset-0 bg-dental-700/20 mix-blend-multiply" />
       </div>
 
