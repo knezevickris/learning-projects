@@ -4,21 +4,25 @@ import { ReactNode } from "react";
 interface ButtonProps {
   children: ReactNode;
   href?: string;
+  target?: string;
   variant?: "primary" | "secondary" | "outline";
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export default function Button({
   children,
   href,
+  target,
   variant = "primary",
   className = "",
   onClick,
   type = "button",
+  disabled = false,
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold transition-all active:scale-95 text-sm md:text-base";
+  const baseStyles = "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold transition-all active:scale-95 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
   
   const variants = {
     primary: "bg-dental-600 text-white hover:bg-dental-700 shadow-lg shadow-dental-500/20 hover:shadow-xl hover:shadow-dental-500/30",
@@ -30,14 +34,14 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={combinedClasses}>
+      <Link href={href} target={target} className={combinedClasses}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className={combinedClasses}>
+    <button type={type} onClick={onClick} className={combinedClasses} disabled={disabled}>
       {children}
     </button>
   );

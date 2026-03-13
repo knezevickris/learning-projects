@@ -11,6 +11,7 @@ export const siteConfig = {
     email: "hello@brightsmiledental.com",
     address: "247 Oak Street, Riverside, CA 92501",
     googleMapsUrl: "https://goo.gl/maps/placeholder",
+    googleMapsApiKey: "", // Add your API key here to enable the interactive map
   },
   
   hours: [
