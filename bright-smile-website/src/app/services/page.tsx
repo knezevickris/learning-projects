@@ -27,20 +27,22 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Image side */}
-            <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32">
-              <NextImage
-                src="/images/services/General-family-dentistry.webp"
-                alt={`General Dentistry at ${siteConfig.name}`}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dental-900/20 to-transparent" />
+            <div className="md:col-span-12 lg:col-span-5 flex justify-center lg:block lg:sticky lg:top-32">
+              <div className="relative w-full max-w-[550px] lg:max-w-none aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20">
+                <NextImage
+                  src="/images/services/General-family-dentistry.webp"
+                  alt={`General Dentistry at ${siteConfig.name}`}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dental-900/20 to-transparent" />
+              </div>
             </div>
 
             {/* Content side - The 4 types of services */}
-            <div className="grid sm:grid-cols-1 gap-12 pt-4">
+            <div className="md:col-span-12 lg:col-span-7 grid sm:grid-cols-1 gap-12 pt-4">
               {/* Sub-service 1 */}
               <div className="p-8 bg-dental-50/30 dark:bg-dental-900/10 rounded-3xl border border-dental-100 dark:border-dental-800 transition-all hover:border-accent-500/50">
                 <div className="flex items-center space-x-4 mb-4">
@@ -104,9 +106,9 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Content side - The 3 types of services */}
-            <div className="grid sm:grid-cols-1 gap-12 pt-4 order-2 lg:order-1">
+            <div className="md:col-span-12 lg:col-span-7 grid sm:grid-cols-1 gap-12 pt-4 order-2 lg:order-1">
               {/* Sub-service 1 */}
               <div className="p-8 bg-dental-50/30 dark:bg-dental-900/10 rounded-3xl border border-dental-100 dark:border-dental-800 transition-all hover:border-accent-500/50 shadow-sm hover:shadow-md">
                 <div className="flex items-center space-x-4 mb-4">
@@ -142,14 +144,16 @@ export default function ServicesPage() {
             </div>
 
             {/* Image side - Right Sticky */}
-            <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32 order-1 lg:order-2">
-              <NextImage
-                src="/images/services/cosmetic1.webp"
-                alt={`Cosmetic Dentistry at ${siteConfig.name}`}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dental-900/20 to-transparent" />
+            <div className="md:col-span-12 lg:col-span-5 order-1 lg:order-2 flex justify-center lg:block lg:sticky lg:top-32">
+              <div className="relative w-full max-w-[550px] lg:max-w-none aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20">
+                <NextImage
+                  src="/images/services/cosmetic1.webp"
+                  alt={`Cosmetic Dentistry at ${siteConfig.name}`}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dental-900/20 to-transparent" />
+              </div>
             </div>
           </div>
         </div>
@@ -170,20 +174,22 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Image side - Back to Left Sticky for variety after Cosmetic's Right Sticky */}
-            <div className="relative aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20 lg:sticky lg:top-32">
-              <NextImage
-                src="/images/services/invisalign1.webp"
-                alt={`Orthodontic Care at ${siteConfig.name}`}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dental-900/20 to-transparent" />
+            <div className="md:col-span-12 lg:col-span-5 flex justify-center lg:block lg:sticky lg:top-32">
+              <div className="relative w-full max-w-[550px] lg:max-w-none aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-dental-50 dark:border-dental-900/20">
+                <NextImage
+                  src="/images/services/invisalign1.webp"
+                  alt={`Orthodontic Care at ${siteConfig.name}`}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dental-900/20 to-transparent" />
+              </div>
             </div>
 
             {/* Content side - The 3 types of services */}
-            <div className="grid sm:grid-cols-1 gap-12 pt-4">
+            <div className="md:col-span-12 lg:col-span-7 grid sm:grid-cols-1 gap-12 pt-4">
               {/* Sub-service 1 */}
               <div className="p-8 bg-dental-50/30 dark:bg-dental-900/10 rounded-3xl border border-dental-100 dark:border-dental-800 transition-all hover:border-accent-500/50 shadow-sm hover:shadow-md">
                 <div className="flex items-center space-x-4 mb-4">
