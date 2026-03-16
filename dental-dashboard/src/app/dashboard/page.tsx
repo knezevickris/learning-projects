@@ -43,16 +43,11 @@ export default async function DashboardPage() {
         {error ? (
           <ErrorMessage message={error} />
         ) : data?.data ? (
-          <DashboardClient practices={data.data} />
+          <DashboardClient practices={data.data} fetchedAt={data.fetchedAt} />
         ) : (
           <ErrorMessage message="Unexpected data response from API." />
         )}
 
-        <footer className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-          {data?.fetchedAt && (
-            <div>Last Synced: {new Date(data.fetchedAt).toLocaleString()}</div>
-          )}
-        </footer>
       </div>
     </main>
   );

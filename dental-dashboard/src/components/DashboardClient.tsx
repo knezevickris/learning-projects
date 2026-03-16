@@ -8,12 +8,13 @@ import PracticeSelector from "./PracticeSelector";
 
 interface DashboardClientProps {
   practices: Practice[];
+  fetchedAt?: string;
 }
 
 /**
  * Client-side wrapper for the dashboard to manage selection and interaction.
  */
-export default function DashboardClient({ practices }: DashboardClientProps) {
+export default function DashboardClient({ practices, fetchedAt }: DashboardClientProps) {
   const [selectedPracticeId, setSelectedPracticeId] = useState<string | "all" | "comparison">("all");
 
   // Filter practices to display based on selection
@@ -21,6 +22,17 @@ export default function DashboardClient({ practices }: DashboardClientProps) {
     if (selectedPracticeId === "all" || selectedPracticeId === "comparison") return practices;
     return practices.filter((p) => p.placeId === selectedPracticeId);
   }, [practices, selectedPracticeId]);
+
+  // Determine the "Winner" (Top Performer)
+  const topPracticeId = useMemo(() => {
+    if (practices.length === 0) return null;
+    return [...practices].sort((a, b) => {
+      // Primary sort: Rating
+      if (b.rating !== a.rating) return b.rating - a.rating;
+      // Secondary sort: Total review count
+      return b.userRatingCount - a.userRatingCount;
+    })[0].placeId;
+  }, [practices]);
 
   // Consolidate all reviews for the selected context
   const allReviews = useMemo(() => {
@@ -42,6 +54,11 @@ export default function DashboardClient({ practices }: DashboardClientProps) {
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
             Dashboard for dental practices
           </h1>
+          {fetchedAt && (
+            <p className="mt-1 text-xs font-medium text-slate-500 uppercase tracking-wider">
+              Last Synced: {new Date(fetchedAt).toLocaleString()}
+            </p>
+          )}
         </div>
       </div>
 
@@ -54,20 +71,85 @@ export default function DashboardClient({ practices }: DashboardClientProps) {
       {selectedPracticeId === "comparison" ? (
         /* Comparison View: Side-by-Side */
         <div className="space-y-12">
+          {/* 1. Comparison Metrics Table */}
+          <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+            <div className="px-6 py-4 border-b border-slate-200 bg-slate-50">
+              <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Competitive Benchmarking</h2>
+            </div>
+            <div className="overflow-x-auto scrollbar-hide">
+              <table className="w-full text-left text-sm border-collapse min-w-max md:min-w-full">
+                <thead>
+                  <tr className="border-b border-slate-200">
+                    <th className="sticky left-0 px-4 md:px-6 py-4 font-bold text-slate-500 uppercase text-[10px] tracking-widest bg-white z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
+                      Metric
+                    </th>
+                    {practices.map(p => (
+                      <th key={p.placeId} className="px-6 py-4 font-bold text-slate-800 bg-white min-w-[140px] md:min-w-0">
+                        {p.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  <tr>
+                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-slate-500 bg-white z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
+                      Google Rating
+                    </td>
+                    {practices.map(p => (
+                      <td key={p.placeId} className="px-6 py-4 font-bold text-slate-800">
+                        {p.rating.toFixed(1)} / 5.0
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-slate-500 bg-white z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
+                      Total Reviews
+                    </td>
+                    {practices.map(p => (
+                      <td key={p.placeId} className="px-6 py-4 font-mono text-slate-800">
+                        {p.userRatingCount.toLocaleString()}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-slate-500 bg-white z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
+                      Rank
+                    </td>
+                    {practices.map(p => {
+                      const isTop = p.placeId === topPracticeId;
+                      return (
+                        <td key={p.placeId} className="px-6 py-4">
+                          {isTop ? (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase">
+                              #1 Leader
+                            </span>
+                          ) : (
+                            <span className="text-slate-400 text-xs">Competitor</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 2. Side-by-Side Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {practices.map((p) => (
               <div key={p.placeId} className="flex flex-col h-full">
                 <div className="mb-4 flex-1">
-                  <PracticeCard practice={p} />
+                  <PracticeCard 
+                    practice={p} 
+                    highlighted={p.placeId === topPracticeId} 
+                    className="h-full"
+                  />
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="pt-8 border-t border-slate-200">
-            <h2 className="text-lg font-bold text-slate-800 mb-6 uppercase tracking-tight">Unified Review Feed</h2>
-            <ReviewsList reviews={allReviews} />
-          </div>
         </div>
       ) : (
         /* Default Split View */

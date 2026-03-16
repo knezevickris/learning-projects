@@ -5,14 +5,25 @@ import RatingDistribution from "./RatingDistribution";
 
 interface PracticeCardProps {
   practice: Practice;
+  highlighted?: boolean;
+  className?: string;
 }
 
 /**
  * Summary card for a dental practice in a business dashboard context.
  */
-export default function PracticeCard({ practice }: PracticeCardProps) {
+export default function PracticeCard({ practice, highlighted, className = "" }: PracticeCardProps) {
   return (
-    <div className="bg-white border border-slate-300 rounded p-5">
+    <div className={`relative bg-white border rounded p-5 ${className} ${
+      highlighted 
+        ? "border-blue-600 ring-1 ring-blue-600 ring-opacity-10 shadow-lg shadow-blue-500/5" 
+        : "border-slate-300"
+    }`}>
+      {highlighted && (
+        <div className="absolute -top-3 left-4 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded shadow-sm">
+          ⭐ Top Performer
+        </div>
+      )}
       <div className="mb-4">
         <h2 className="text-lg font-bold text-slate-800">
           {practice.name}
