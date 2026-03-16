@@ -7,12 +7,12 @@ export interface PracticeConfig {
 
 export const PRACTICES: PracticeConfig[] = [
   {
-    placeId: "ChIJGzPfjJLJWEcRmqi8GfP1i4g",
-    name: "Stomatološka ordinacija Euro Dental Centar Sarajevo",
+    placeId: "ChIJazLXnNnIWEcRNo95VhRyNw8",
+    name: "Poliklinika Bičakčić",
   },
   {
-    placeId: "ChIJF-461g7JWEcRit58e6VBp3M",
-    name: "Stomatološka ordinacija MaxDent Sarajevo",
+    placeId: "ChIJr06UqaXJWEcRoDFDblW3c_U",
+    name: "Stomatološka ordinacija Dr. Hodžić",
   },
   {
     placeId: "ChIJfQyvq1PJWEcR6Jz3l5OxDyM",
