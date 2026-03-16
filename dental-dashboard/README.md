@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dental Practices Reviews Dashboard
 
-## Getting Started
+A high-performance monitoring solution designed to aggregate and analyze ratings and customer feedback from multiple dental clinics. This application utilizes the Google Places API (New) to provide real-time data insights, competitive benchmarking, and historical review tracking within a streamlined corporate interface.
 
-First, run the development server:
+## Core Functionality
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Multi-Practice Management**: A centralized interface to monitor multiple locations with the ability to toggle between individual and aggregated data views.
+- **Competitive Benchmarking Analysis**: A dedicated comparison engine that calculates performance leaders based on rating averages and review volume.
+- **Responsive Comparative Interface**: A specialized mobile-optimized benchmarking table featuring sticky columns for persistent data labeling.
+- **Optimization and Caching**: An integrated file-based caching layer that minimizes API latency and reduces external data dependency costs.
+- **Data Visualization**: Clear star-rating distributions and review sentiment tracking for each registered practice.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation and Configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18.x or higher
+- An active Google Cloud Project with the Places API enabled
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Setup Procedure
+1.  **Dependency Installation**:
+    ```bash
+    npm install
+    ```
 
-## Learn More
+2.  **Environment Configuration**:
+    Create a `.env.local` file in the root directory and provide your Google Cloud credentials:
+    ```env
+    GOOGLE_PLACES_API_KEY=your_api_key_here
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3.  **Practice Registration**:
+    Practice locations are managed via the configuration file located at `src/lib/config.ts`. Add the unique Google Place ID for each practice you wish to monitor.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4.  **Development Execution**:
+    ```bash
+    npm run dev
+    ```
+    The application will be accessible at `http://localhost:3000/dashboard`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technical Specifications
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework**: Next.js 15 (App Router Architecture)
+- **Styling**: Tailwind CSS
+- **Data Integration**: Google Places API (New SDK)
+- **Performance**: Static and Dynamic rendering with local cache invalidation logic.
