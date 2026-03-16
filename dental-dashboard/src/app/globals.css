@@ -1,5 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Tailwind base styles */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@source "../**/*.{ts,tsx}";
+
+h1 {
+  color: #0f172a !important; /* Test direct CSS */
+}
+
+body {
+  @apply antialiased bg-slate-50 text-slate-900;
+  font-family: var(--font-sans);
+  background-color: #f8fafc !important; /* slate-50 */
+}

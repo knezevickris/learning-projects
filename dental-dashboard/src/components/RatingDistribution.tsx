@@ -23,23 +23,23 @@ export default function RatingDistribution({ reviews }: RatingDistributionProps)
   const total = reviews.length;
 
   return (
-    <div className="space-y-1.5 py-4">
+    <div className="space-y-1 py-2">
       {([5, 4, 3, 2, 1] as const).map((star) => {
         const count = counts[star];
         const percentage = total > 0 ? (count / total) * 100 : 0;
         
         return (
-          <div key={star} className="flex items-center gap-3 text-sm">
-            <span className="w-12 text-slate-500 font-medium whitespace-nowrap">
+          <div key={star} className="flex items-center gap-2 text-[10px]">
+            <span className="w-10 text-slate-500 font-medium">
               {star} star
             </span>
-            <div className="relative flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div className="flex-1 h-3 bg-slate-100 border border-slate-200">
               <div 
-                className="absolute top-0 left-0 h-full bg-slate-400 transition-all duration-500 ease-out"
+                className="h-full bg-slate-400"
                 style={{ width: `${percentage}%` }}
               />
             </div>
-            <span className="w-8 text-right text-slate-400 font-mono text-xs">
+            <span className="w-6 text-right text-slate-400 font-mono">
               {count}
             </span>
           </div>
