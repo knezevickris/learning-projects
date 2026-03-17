@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Practice } from "@/lib/types";
 import PracticeCard from "./PracticeCard";
 import ReviewsList from "./ReviewsList";
@@ -19,6 +19,16 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
   const [selectedPracticeId, setSelectedPracticeId] = useState<string | "all" | "comparison">("all");
   const [selectedRatings, setSelectedRatings] = useState<Set<number>>(new Set());
   const [sortBy, setSortBy] = useState<SortOption>("newest");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handleRatingToggle = (rating: number) => {
     const newSelected = new Set(selectedRatings);
@@ -30,7 +40,10 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
     setSelectedRatings(newSelected);
   };
 
-  const clearFilters = () => setSelectedRatings(new Set());
+  const clearFilters = () => {
+    setSelectedRatings(new Set());
+    setSearchQuery("");
+  };
 
   // Filter practices to display based on selection
   const displayedPractices = useMemo(() => {
@@ -84,15 +97,22 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
       sourceReviews.sort((a, b) => a.rating - b.rating);
     }
 
-    const filtered = selectedRatings.size === 0 
+    const filteredByRating = selectedRatings.size === 0 
       ? sourceReviews 
       : sourceReviews.filter(r => selectedRatings.has(Math.floor(r.rating)));
 
+    const finalFiltered = debouncedSearchQuery.trim() === ""
+      ? filteredByRating
+      : filteredByRating.filter(r => {
+          const query = debouncedSearchQuery.toLowerCase();
+          return r.text && r.text.toLowerCase().includes(query);
+        });
+
     return {
       total: sourceReviews.length,
-      filteredReviews: filtered
+      filteredReviews: finalFiltered
     };
-  }, [practices, selectedPracticeId, selectedRatings, sortBy]);
+  }, [practices, selectedPracticeId, selectedRatings, sortBy, debouncedSearchQuery]);
 
   const selectorOptions = practices.map(p => ({ id: p.placeId, name: p.name }));
 
@@ -232,6 +252,8 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
               onClear={clearFilters}
               sortBy={sortBy}
               onSortChange={setSortBy}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
               totalCount={reviewStats.total}
               filteredCount={reviewStats.filteredReviews.length}
             />
