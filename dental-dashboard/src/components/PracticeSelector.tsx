@@ -16,10 +16,10 @@ export default function PracticeSelector({ practices, selectedId, onSelect }: Pr
     <div className="flex flex-wrap gap-2 mb-8">
       <button
         onClick={() => onSelect("all")}
-        className={`px-3 py-1.5 rounded border text-sm font-medium ${
+        className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
           selectedId === "all"
-            ? "bg-slate-800 text-white border-slate-800"
-            : "bg-white text-slate-600 border-slate-300 hover:bg-slate-50"
+            ? "bg-brand-dark text-white border-brand-dark"
+            : "bg-white text-brand-text border-brand-border hover:bg-brand-highlight/20"
         }`}
       >
         All Reviews
@@ -27,10 +27,10 @@ export default function PracticeSelector({ practices, selectedId, onSelect }: Pr
 
       <button
         onClick={() => onSelect("comparison")}
-        className={`px-3 py-1.5 rounded border text-sm font-medium ${
+        className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
           selectedId === "comparison"
-            ? "bg-slate-800 text-white border-slate-800"
-            : "bg-white text-slate-600 border-slate-300 hover:bg-slate-50"
+            ? "bg-brand-dark text-white border-brand-dark"
+            : "bg-white text-brand-text border-brand-border hover:bg-brand-highlight/20"
         }`}
       >
         Comparison View
@@ -40,10 +40,10 @@ export default function PracticeSelector({ practices, selectedId, onSelect }: Pr
         <button
           key={practice.id}
           onClick={() => onSelect(practice.id)}
-          className={`px-3 py-1.5 rounded border text-sm font-medium ${
+          className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
             selectedId === practice.id
-              ? "bg-slate-800 text-white border-slate-800"
-              : "bg-white text-slate-600 border-slate-300 hover:bg-slate-50"
+              ? "bg-brand-dark text-white border-brand-dark"
+              : "bg-white text-brand-text border-brand-border hover:bg-brand-highlight/20"
           }`}
         >
           {practice.name}

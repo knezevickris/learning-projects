@@ -30,16 +30,16 @@ export default function RatingDistribution({ reviews }: RatingDistributionProps)
         
         return (
           <div key={star} className="flex items-center gap-2 text-[10px]">
-            <span className="w-10 text-slate-500 font-medium">
+            <span className="w-10 text-brand-text/60 font-medium">
               {star} star
             </span>
-            <div className="flex-1 h-3 bg-slate-100 border border-slate-200">
+            <div className="flex-1 h-3 bg-brand-highlight/20 border border-brand-border/30">
               <div 
-                className="h-full bg-slate-400"
+                className="h-full bg-brand-dark/50"
                 style={{ width: `${percentage}%` }}
               />
             </div>
-            <span className="w-6 text-right text-slate-400 font-mono">
+            <span className="w-6 text-right text-brand-text/40 font-mono">
               {count}
             </span>
           </div>

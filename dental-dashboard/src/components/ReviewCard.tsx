@@ -19,14 +19,14 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   const displayedText = isExpanded ? review.text : review.text.slice(0, textLimit);
 
   return (
-    <div className="border-b border-slate-200 last:border-b-0 py-4">
+    <div className="border-b border-brand-border/30 last:border-b-0 py-4">
       <div className="flex items-start gap-4">
         {/* Profile Avatar */}
-        <div className="flex-shrink-0 w-8 h-8 bg-slate-100 border border-slate-300 flex items-center justify-center text-[10px] font-bold text-slate-500 overflow-hidden">
+        <div className="flex-shrink-0 w-8 h-8 bg-brand-highlight/20 flex items-center justify-center text-[10px] font-bold text-brand-text/60 overflow-hidden">
           {review.profilePhotoUrl ? (
-            <img 
-              src={review.profilePhotoUrl} 
-              alt={review.authorName} 
+            <img
+              src={review.profilePhotoUrl}
+              alt={review.authorName}
               className="w-full h-full object-cover"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
@@ -40,10 +40,10 @@ export default function ReviewCard({ review }: ReviewCardProps) {
         {/* Content */}
         <div className="flex-1 space-y-1">
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-bold text-slate-800">
+            <h4 className="text-sm font-bold text-brand-dark">
               {review.authorName}
             </h4>
-            <span className="text-[10px] font-medium text-slate-500 uppercase tracking-tight">
+            <span className="text-[10px] font-medium text-brand-text/40 uppercase tracking-tight">
               {review.relativeTime}
             </span>
           </div>
@@ -52,20 +52,20 @@ export default function ReviewCard({ review }: ReviewCardProps) {
 
           <div className="pt-0.5">
             {review.text ? (
-              <p className="text-xs text-slate-600 leading-normal">
+              <p className="text-xs text-brand-text leading-normal">
                 {displayedText}
                 {hasLongText && !isExpanded && "..."}
                 {hasLongText && (
-                  <button 
+                  <button
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="ml-1 text-[10px] font-bold text-slate-400 hover:underline uppercase"
+                    className="ml-1 text-[10px] font-bold text-brand-dark/40 hover:underline uppercase"
                   >
                     {isExpanded ? "Less" : "More"}
                   </button>
                 )}
               </p>
             ) : (
-              <p className="text-[10px] italic text-slate-400">
+              <p className="text-[10px] italic text-brand-text/30">
                 Rating only
               </p>
             )}

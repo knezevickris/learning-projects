@@ -31,7 +31,7 @@ export default function StarRating({ rating, maxStars = 5, className = "" }: Sta
           <div key={i} className="relative">
             {/* Empty Star (Background) */}
             <svg
-              className={`w-4 h-4 text-slate-200 fill-current`}
+              className={`w-4 h-4 text-brand-border fill-current`}
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -45,7 +45,7 @@ export default function StarRating({ rating, maxStars = 5, className = "" }: Sta
                 style={{ width: fillType === "full" ? "100%" : "50%" }}
               >
                 <svg
-                  className={`w-4 h-4 text-amber-500 fill-current`}
+                  className={`w-4 h-4 text-amber-400 fill-current`}
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
