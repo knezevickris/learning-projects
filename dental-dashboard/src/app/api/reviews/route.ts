@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { isCacheValid, readCache, writeCache } from "@/lib/cache";
 import { fetchPlaceDetails } from "@/lib/google-places";
 import { PRACTICES } from "@/lib/config";
 import { ApiResponse, Practice } from "@/lib/types";
