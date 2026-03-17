@@ -18,6 +18,42 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   const hasLongText = review.text.length > textLimit;
   const displayedText = isExpanded ? review.text : review.text.slice(0, textLimit);
 
+  // Sentiment Keywords
+  const sentimentConfig = {
+    positive: ["friendly", "without pain", "great", "excellent", "professional", "amazing", "best", "painless", "gentle", "happy", "clean", "wonderful", "thanks", "perfect"],
+    negative: ["pain", "wait", "not recommend", "misunderstanding", "waiting", "rude", "expensive", "costly", "hurt", "bad", "worst", "unprofessional", "angry", "disappointed", "slow", "fee"]
+  };
+
+  const highlightText = (text: string) => {
+    if (!text) return text;
+
+    // Create a combined regex for all keywords
+    const posPattern = sentimentConfig.positive.join("|");
+    const negPattern = sentimentConfig.negative.join("|");
+    const combinedRegex = new RegExp(`\\b(${posPattern}|${negPattern})\\b`, "gi");
+
+    const parts = text.split(combinedRegex);
+
+    return parts.map((part, i) => {
+      const lowerPart = part.toLowerCase();
+      if (sentimentConfig.positive.includes(lowerPart)) {
+        return (
+          <mark key={i} className="bg-green-100 text-green-800 px-0.5 rounded-sm font-medium border-b border-green-200">
+            {part}
+          </mark>
+        );
+      }
+      if (sentimentConfig.negative.includes(lowerPart)) {
+        return (
+          <mark key={i} className="bg-red-100 text-red-800 px-0.5 rounded-sm font-medium border-b border-red-200">
+            {part}
+          </mark>
+        );
+      }
+      return part;
+    });
+  };
+
   return (
     <div className="border-b border-brand-border/30 last:border-b-0 py-4">
       <div className="flex items-start gap-4">
@@ -53,7 +89,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           <div className="pt-0.5">
             {review.text ? (
               <p className="text-xs text-brand-text leading-normal">
-                {displayedText}
+                {highlightText(displayedText)}
                 {hasLongText && !isExpanded && "..."}
                 {hasLongText && (
                   <button
