@@ -5,7 +5,7 @@ import { Practice } from "@/lib/types";
 import PracticeCard from "./PracticeCard";
 import ReviewsList from "./ReviewsList";
 import PracticeSelector from "./PracticeSelector";
-import FilterBar from "./FilterBar";
+import FilterBar, { SortOption } from "./FilterBar";
 
 interface DashboardClientProps {
   practices: Practice[];
@@ -18,6 +18,7 @@ interface DashboardClientProps {
 export default function DashboardClient({ practices, fetchedAt }: DashboardClientProps) {
   const [selectedPracticeId, setSelectedPracticeId] = useState<string | "all" | "comparison">("all");
   const [selectedRatings, setSelectedRatings] = useState<Set<number>>(new Set());
+  const [sortBy, setSortBy] = useState<SortOption>("newest");
 
   const handleRatingToggle = (rating: number) => {
     const newSelected = new Set(selectedRatings);
@@ -72,10 +73,16 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
       sourceReviews = practice ? practice.reviews : [];
     }
 
-    // Sort by date first
-    sourceReviews.sort((a, b) =>
-      new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()
-    );
+    // Sort based on selection
+    if (sortBy === "newest") {
+      sourceReviews.sort((a, b) => new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime());
+    } else if (sortBy === "oldest") {
+      sourceReviews.sort((a, b) => new Date(a.publishTime).getTime() - new Date(b.publishTime).getTime());
+    } else if (sortBy === "highest") {
+      sourceReviews.sort((a, b) => b.rating - a.rating);
+    } else if (sortBy === "lowest") {
+      sourceReviews.sort((a, b) => a.rating - b.rating);
+    }
 
     const filtered = selectedRatings.size === 0 
       ? sourceReviews 
@@ -85,7 +92,7 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
       total: sourceReviews.length,
       filteredReviews: filtered
     };
-  }, [practices, selectedPracticeId, selectedRatings]);
+  }, [practices, selectedPracticeId, selectedRatings, sortBy]);
 
   const selectorOptions = practices.map(p => ({ id: p.placeId, name: p.name }));
 
@@ -223,6 +230,8 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
               selectedRatings={selectedRatings}
               onRatingToggle={handleRatingToggle}
               onClear={clearFilters}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
               totalCount={reviewStats.total}
               filteredCount={reviewStats.filteredReviews.length}
             />
