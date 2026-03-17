@@ -34,6 +34,7 @@ export async function fetchPlaceDetails(placeId: string): Promise<{ ok: true; da
         "X-Goog-Api-Key": GOOGLE_PLACES_API_KEY,
         "X-Goog-FieldMask": fieldMask,
       },
+      next: { revalidate: 300 }, // Cache for 5 minutes (300 seconds)
     });
 
     if (!response.ok) {

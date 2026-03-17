@@ -6,18 +6,7 @@ import { ApiResponse, Practice } from "@/lib/types";
 
 export async function GET() {
   try {
-    // 1. Check if cache is fresh
-    const cacheIsValid = await isCacheValid();
-    if (cacheIsValid) {
-      const cachedData = await readCache();
-      if (cachedData) {
-        console.log("Serving from cache");
-        return NextResponse.json(cachedData);
-      }
-    }
-
-    // 2. Cache is stale or missing - fetch fresh data in parallel
-    // We use allSettled because we don't want one failing practice to block the others
+    // 1. Fetch data from Google Places (caching is handled automatically by Next.js fetch in lib/google-places.ts)
     const fetchPromises = PRACTICES.map(p => fetchPlaceDetails(p.placeId));
     const results = await Promise.allSettled(fetchPromises);
 
@@ -35,30 +24,26 @@ export async function GET() {
           errorMessages.push(`${practiceConfig.name}: ${fetchResult.error}`);
         }
       } else {
-        errorMessages.push(`${practiceConfig.name}: Network or Promise error`);
+        errorMessages.push(`${practiceConfig.name}: Network failure`);
       }
     });
 
-    // 3. Process results
+    // 2. Return results
     if (successfulPractices.length > 0) {
-      // Save what we got to the cache
-      await writeCache(successfulPractices);
-
       const response: ApiResponse = {
         ok: true,
         data: successfulPractices,
-        error: errorMessages.length > 0 ? `Partial failure: ${errorMessages.join(" | ")}` : null,
+        error: errorMessages.length > 0 ? `Partial data: ${errorMessages.join(" | ")}` : null,
         fetchedAt: new Date().toISOString(),
       };
 
       return NextResponse.json(response);
     }
 
-    // 4. All attempts failed and no cache available
     const failureResponse: ApiResponse = {
       ok: false,
       data: null,
-      error: `All practice fetches failed: ${errorMessages.join(" | ")}`,
+      error: `All fetches failed: ${errorMessages.join(" | ")}`,
       fetchedAt: new Date().toISOString(),
     };
 
