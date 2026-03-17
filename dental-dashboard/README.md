@@ -1,45 +1,55 @@
 # Dental Practices Reviews Dashboard
 
-A high-performance monitoring solution designed to aggregate and analyze ratings and customer feedback from multiple dental clinics. This application utilizes the Google Places API (New) to provide real-time data insights, competitive benchmarking, and historical review tracking within a streamlined corporate interface.
+A professional, high-performance monitoring solution designed to aggregate, analyze, and manage patient feedback across multiple dental clinics. This application leverages the Google Places API to provide real-time data insights, competitive benchmarking, and actionable sentiment analysis within a clean, clinical-grade interface.
 
-## Core Functionality
 
-- **Multi-Practice Management**: A centralized interface to monitor multiple locations with the ability to toggle between individual and aggregated data views.
-- **Competitive Benchmarking Analysis**: A dedicated comparison engine that calculates performance leaders based on rating averages and review volume.
-- **Responsive Comparative Interface**: A specialized mobile-optimized benchmarking table featuring sticky columns for persistent data labeling.
-- **Optimization and Caching**: An integrated file-based caching layer that minimizes API latency and reduces external data dependency costs.
-- **Data Visualization**: Clear star-rating distributions and review sentiment tracking for each registered practice.
+- **Consolidated Review Feed**: Monitor all practices simultaneously or drill down into specific locations with a unified, high-performance feed.
+- **Competitive Benchmarking**: A dedicated Comparison View that evaluates practices using Google Rating, Volume, and a custom **Strength Score**.
+- **Advanced Filtering & Search**:
+  - **Star Filters**: Multi-select rating toggles.
+  - **Keyword Search**: Real-time, debounced (300ms) text search across all patient reviews.
+  - **Smart Sorting**: Order reviews by Newest, Oldest, or Rating Extremes.
+- **Sentiment Indicator**: Automatic keyword-based highlighting (Regex) flagging patient pain points (Red) and positive experiences (Green).
+- **Review Response Suggestions**: Instant professional outreach templates generated for negative reviews (1-2 stars) with 1-click clipboard copying.
+- **Data Portability**: Client-side CSV export functionality that respects your current filters and search context for offline analysis.
+
+## Performance Scoring (The Dampened Rating)
+
+To ensure fair ranking between a practice with "5.0 stars from 2 reviews" and "4.8 stars from 200 reviews," we utilize a **Dampened Rating Formula**:
+$Score = Rating \times (1 - e^{-v/k})$
+*(where $v$ is review count and $k=15$ is our confidence threshold)*. This rewards consistency and volume, providing a more accurate "Strength Score."
 
 ## Installation and Configuration
 
 ### Prerequisites
 - Node.js 18.x or higher
-- An active Google Cloud Project with the Places API enabled
+- Google Cloud Project with the Places API (New) enabled
 
 ### Setup Procedure
-1.  **Dependency Installation**:
+1.  **Install Dependencies**:
     ```bash
     npm install
     ```
 
-2.  **Environment Configuration**:
-    Create a `.env.local` file in the root directory and provide your Google Cloud credentials:
+2.  **Environment Setup**:
+    Add your API key to `.env.local`:
     ```env
     GOOGLE_PLACES_API_KEY=your_api_key_here
     ```
 
-3.  **Practice Registration**:
-    Practice locations are managed via the configuration file located at `src/lib/config.ts`. Add the unique Google Place ID for each practice you wish to monitor.
+3.  **Practice Configuration**:
+    Manage monitored locations in `src/lib/config.ts` by adding their Google Place IDs.
 
-4.  **Development Execution**:
+4.  **Run Locally**:
     ```bash
     npm run dev
     ```
-    The application will be accessible at `http://localhost:3000/dashboard`.
+    View the dashboard at `http://localhost:3000`.
 
 ## Technical Specifications
 
-- **Framework**: Next.js 15 (App Router Architecture)
-- **Styling**: Tailwind CSS
-- **Data Integration**: Google Places API (New SDK)
-- **Performance**: Static and Dynamic rendering with local cache invalidation logic.
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS v4 (Custom semantic theme)
+- **Data Caching**: Native Next.js `fetch` caching with a 5-minute revalidation (ISR) for optimal production performance.
+- **CSV Engine**: Blob-based client-side generation.
+- **Logic**: Memoized filtering and sorting chains for zero-latency UI response.
