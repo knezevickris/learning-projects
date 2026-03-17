@@ -23,16 +23,30 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
     return practices.filter((p) => p.placeId === selectedPracticeId);
   }, [practices, selectedPracticeId]);
 
-  // Determine the "Winner" (Top Performer)
-  const topPracticeId = useMemo(() => {
-    if (practices.length === 0) return null;
-    return [...practices].sort((a, b) => {
-      // Primary sort: Rating
-      if (b.rating !== a.rating) return b.rating - a.rating;
-      // Secondary sort: Total review count
-      return b.userRatingCount - a.userRatingCount;
-    })[0].placeId;
+  /**
+   * Calculates a "Dampened Rating" score.
+   * Trust grows as review count (v) increases relative to a threshold (k=15).
+   * Formula: Score = Rating * (1 - e ^ (-v / k))
+   */
+  const calculateWeightedScore = (rating: number, reviewCount: number) => {
+    if (reviewCount === 0) return 0;
+    const k = 15; // Confidence threshold
+    const confidence = 1 - Math.exp(-reviewCount / k);
+    return rating * confidence;
+  };
+
+  // Determine the "Winner" (Top Performer) using Weighted Score
+  const practiceMetrics = useMemo(() => {
+    return practices.map(p => ({
+      ...p,
+      weightedScore: calculateWeightedScore(p.rating, p.userRatingCount)
+    })).sort((a, b) => b.weightedScore - a.weightedScore);
   }, [practices]);
+
+  const topPracticeId = useMemo(() => {
+    if (practiceMetrics.length === 0) return null;
+    return practiceMetrics[0].placeId;
+  }, [practiceMetrics]);
 
   // Consolidate all reviews for the selected context
   const allReviews = useMemo(() => {
@@ -110,6 +124,20 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
                         {p.userRatingCount.toLocaleString()}
                       </td>
                     ))}
+                  </tr>
+                  <tr>
+                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-slate-500 bg-white z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
+                      Strength Score
+                    </td>
+                    {practices.map(p => {
+                      const score = calculateWeightedScore(p.rating, p.userRatingCount);
+                      return (
+                        <td key={p.placeId} className="px-6 py-4 font-mono text-slate-800">
+                          {score.toFixed(2)}
+                          <span className="text-[10px] text-slate-400 ml-1">/ 5.0</span>
+                        </td>
+                      );
+                    })}
                   </tr>
                   <tr>
                     <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-slate-500 bg-white z-10 border-r border-slate-100 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
