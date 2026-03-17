@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { Practice } from "@/lib/types";
+import { Practice, Review } from "@/lib/types";
 import PracticeCard from "./PracticeCard";
 import ReviewsList from "./ReviewsList";
 import PracticeSelector from "./PracticeSelector";
@@ -80,10 +80,10 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
   const reviewStats = useMemo(() => {
     let sourceReviews = [];
     if (selectedPracticeId === "all" || selectedPracticeId === "comparison") {
-      sourceReviews = practices.flatMap((p) => p.reviews);
+      sourceReviews = practices.flatMap((p) => p.reviews.map(r => ({ ...r, practiceName: p.name })));
     } else {
       const practice = practices.find((p) => p.placeId === selectedPracticeId);
-      sourceReviews = practice ? practice.reviews : [];
+      sourceReviews = practice ? practice.reviews.map(r => ({ ...r, practiceName: practice.name })) : [];
     }
 
     // Sort based on selection
@@ -110,9 +110,45 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
 
     return {
       total: sourceReviews.length,
-      filteredReviews: finalFiltered
+      filteredReviews: finalFiltered as (Review & { practiceName: string })[]
     };
   }, [practices, selectedPracticeId, selectedRatings, sortBy, debouncedSearchQuery]);
+
+  const downloadCSV = () => {
+    const reviewsToExport = reviewStats.filteredReviews;
+    if (reviewsToExport.length === 0) return;
+
+    // CSV Header
+    const headers = ["Practice Name", "Author", "Rating", "Review Text", "Date"];
+    
+    // Helper to escape CSV fields
+    const escapeCSV = (str: string) => {
+      if (!str) return '""';
+      const escaped = str.replace(/"/g, '""');
+      return `"${escaped}"`;
+    };
+
+    const csvContent = [
+      headers.join(","),
+      ...reviewsToExport.map(r => [
+        escapeCSV(r.practiceName),
+        escapeCSV(r.authorName),
+        r.rating,
+        escapeCSV(r.text),
+        escapeCSV(new Date(r.publishTime).toLocaleDateString())
+      ].join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `google_reviews_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const selectorOptions = practices.map(p => ({ id: p.placeId, name: p.name }));
 
@@ -256,6 +292,7 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
               onSearchChange={setSearchQuery}
               totalCount={reviewStats.total}
               filteredCount={reviewStats.filteredReviews.length}
+              onDownload={downloadCSV}
             />
             <ReviewsList reviews={reviewStats.filteredReviews} />
           </div>

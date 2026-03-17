@@ -14,6 +14,7 @@ interface FilterBarProps {
   onSearchChange: (query: string) => void;
   totalCount: number;
   filteredCount: number;
+  onDownload: () => void;
 }
 
 /**
@@ -29,6 +30,7 @@ export default function FilterBar({
   onSearchChange,
   totalCount,
   filteredCount,
+  onDownload,
 }: FilterBarProps) {
   const ratings = [5, 4, 3, 2, 1];
 
@@ -88,18 +90,17 @@ export default function FilterBar({
                 <button
                   key={rating}
                   onClick={() => onRatingToggle(rating)}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded border text-[10px] font-bold transition-colors ${
-                    isActive
+                  className={`flex items-center gap-1 px-2.5 py-1 rounded border text-[10px] font-bold transition-colors ${isActive
                       ? "bg-brand-dark text-white border-brand-dark"
                       : "bg-white text-brand-text border-brand-border hover:border-brand-accent"
-                  }`}
+                    }`}
                 >
                   {rating}★
                 </button>
               );
             })}
           </div>
-          
+
           {(selectedRatings.size > 0 || searchQuery) && (
             <button
               onClick={onClear}
@@ -110,8 +111,21 @@ export default function FilterBar({
           )}
         </div>
 
-        <div className="text-[10px] font-bold text-brand-text/60 uppercase tracking-widest bg-brand-highlight/30 border border-brand-highlight/50 px-3 py-1 rounded inline-block sm:self-start">
-          Showing <span className="text-brand-dark">{filteredCount}</span> of <span className="text-brand-dark">{totalCount}</span> Reviews
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="text-[10px] font-bold text-brand-text/60 uppercase tracking-widest bg-brand-highlight/30 border border-brand-highlight/50 px-3 py-1 rounded inline-block sm:self-start">
+            Showing <span className="text-brand-dark">{filteredCount}</span> of <span className="text-brand-dark">{totalCount}</span> Reviews
+          </div>
+
+          <button
+            onClick={onDownload}
+            disabled={filteredCount === 0}
+            className="flex items-center gap-1.5 px-3 py-1 rounded border border-brand-border text-[10px] font-extrabold text-brand-dark uppercase tracking-wider bg-white hover:bg-brand-bg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Download CSV
+          </button>
         </div>
       </div>
     </div>
