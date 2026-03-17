@@ -5,6 +5,7 @@ import { Practice } from "@/lib/types";
 import PracticeCard from "./PracticeCard";
 import ReviewsList from "./ReviewsList";
 import PracticeSelector from "./PracticeSelector";
+import FilterBar from "./FilterBar";
 
 interface DashboardClientProps {
   practices: Practice[];
@@ -16,6 +17,19 @@ interface DashboardClientProps {
  */
 export default function DashboardClient({ practices, fetchedAt }: DashboardClientProps) {
   const [selectedPracticeId, setSelectedPracticeId] = useState<string | "all" | "comparison">("all");
+  const [selectedRatings, setSelectedRatings] = useState<Set<number>>(new Set());
+
+  const handleRatingToggle = (rating: number) => {
+    const newSelected = new Set(selectedRatings);
+    if (newSelected.has(rating)) {
+      newSelected.delete(rating);
+    } else {
+      newSelected.add(rating);
+    }
+    setSelectedRatings(newSelected);
+  };
+
+  const clearFilters = () => setSelectedRatings(new Set());
 
   // Filter practices to display based on selection
   const displayedPractices = useMemo(() => {
@@ -48,16 +62,30 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
     return practiceMetrics[0].placeId;
   }, [practiceMetrics]);
 
-  // Consolidate all reviews for the selected context
-  const allReviews = useMemo(() => {
+  // Consolidate and filter reviews
+  const reviewStats = useMemo(() => {
+    let sourceReviews = [];
     if (selectedPracticeId === "all" || selectedPracticeId === "comparison") {
-      return practices.flatMap((p) => p.reviews).sort((a, b) =>
-        new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()
-      );
+      sourceReviews = practices.flatMap((p) => p.reviews);
+    } else {
+      const practice = practices.find((p) => p.placeId === selectedPracticeId);
+      sourceReviews = practice ? practice.reviews : [];
     }
-    const practice = practices.find((p) => p.placeId === selectedPracticeId);
-    return practice ? practice.reviews : [];
-  }, [practices, selectedPracticeId]);
+
+    // Sort by date first
+    sourceReviews.sort((a, b) =>
+      new Date(b.publishTime).getTime() - new Date(a.publishTime).getTime()
+    );
+
+    const filtered = selectedRatings.size === 0 
+      ? sourceReviews 
+      : sourceReviews.filter(r => selectedRatings.has(Math.floor(r.rating)));
+
+    return {
+      total: sourceReviews.length,
+      filteredReviews: filtered
+    };
+  }, [practices, selectedPracticeId, selectedRatings]);
 
   const selectorOptions = practices.map(p => ({ id: p.placeId, name: p.name }));
 
@@ -191,7 +219,14 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
 
           {/* Reviews Feed */}
           <div className="lg:col-span-2">
-            <ReviewsList reviews={allReviews} />
+            <FilterBar 
+              selectedRatings={selectedRatings}
+              onRatingToggle={handleRatingToggle}
+              onClear={clearFilters}
+              totalCount={reviewStats.total}
+              filteredCount={reviewStats.filteredReviews.length}
+            />
+            <ReviewsList reviews={reviewStats.filteredReviews} />
           </div>
         </div>
       )}
