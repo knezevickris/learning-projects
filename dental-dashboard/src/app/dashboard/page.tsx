@@ -1,7 +1,9 @@
 import React from "react";
 import DashboardClient from "@/components/DashboardClient";
 import ErrorMessage from "@/components/ErrorMessage";
-import { ApiResponse } from "@/lib/types";
+import { fetchPlaceDetails } from "@/lib/google-places";
+import { PRACTICES } from "@/lib/config";
+import { Practice } from "@/lib/types";
 
 // Force dynamic to ensure we don't bake-in the cache during build time
 export const dynamic = "force-dynamic";
@@ -11,44 +13,67 @@ export const dynamic = "force-dynamic";
  * Responsible for initial data fetching and layout structure.
  */
 export default async function DashboardPage() {
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const host = process.env.NEXT_PUBLIC_VERCEL_URL || "localhost:3000";
-
-  let data: ApiResponse | null = null;
-  let error: string | null = null;
-
+  const fetchedAt = new Date().toISOString();
+  
   try {
-    // Fetch data from our own internal API
-    const response = await fetch(`${protocol}://${host}/api/reviews`, {
-      cache: "no-store", // Ensure we respect our own cache logic
+    // Direct server-side call instead of internal fetch()
+    const fetchPromises = PRACTICES.map(p => fetchPlaceDetails(p.placeId));
+    const results = await Promise.allSettled(fetchPromises);
+
+    const successfulPractices: Practice[] = [];
+    const errorMessages: string[] = [];
+
+    results.forEach((result, index) => {
+      const practiceConfig = PRACTICES[index];
+      if (result.status === "fulfilled") {
+        const fetchResult = result.value;
+        if (fetchResult.ok) {
+          successfulPractices.push(fetchResult.data);
+        } else {
+          errorMessages.push(`${practiceConfig.name}: ${fetchResult.error}`);
+        }
+      } else {
+        errorMessages.push(`${practiceConfig.name}: Connection failed`);
+      }
     });
 
-    if (!response.ok) {
-      throw new Error(`Cloud connection failed (${response.status})`);
+    if (successfulPractices.length === 0) {
+      const allErrors = errorMessages.length > 0 
+        ? errorMessages.join(" | ") 
+        : "Failed to connect to Google API.";
+      return (
+        <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
+          <div className="max-w-7xl mx-auto">
+            <ErrorMessage message={allErrors} />
+          </div>
+        </main>
+      );
     }
+    
+    return (
+      <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <DashboardClient 
+            practices={successfulPractices} 
+            fetchedAt={fetchedAt} 
+          />
+          {errorMessages.length > 0 && (
+            <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-xs font-mono">
+              <strong>Partial data warning:</strong> {errorMessages.join(" | ")}
+            </div>
+          )}
+        </div>
+      </main>
+    );
 
-    data = await response.json();
-
-    if (data && !data.ok) {
-      error = data.error;
-    }
   } catch (err: any) {
-    console.error("Dashboard Fetch Error:", err);
-    error = err.message || "Failed to connect to the backend API.";
+    console.error("Dashboard Server Error:", err);
+    return (
+      <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <ErrorMessage message={err.message || "Failed to initialize dashboard."} />
+        </div>
+      </main>
+    );
   }
-
-  return (
-    <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
-      <div className="max-w-7xl mx-auto">
-        {error ? (
-          <ErrorMessage message={error} />
-        ) : data?.data ? (
-          <DashboardClient practices={data.data} fetchedAt={data.fetchedAt} />
-        ) : (
-          <ErrorMessage message="Unexpected data response from API." />
-        )}
-
-      </div>
-    </main>
-  );
 }
