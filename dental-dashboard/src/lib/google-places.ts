@@ -1,4 +1,4 @@
-import { Practice, Review } from "./types";
+import { GooglePlaceReview, Practice, Review } from "./types";
 
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const BASE_URL = "https://places.googleapis.com/v1/places";
@@ -40,9 +40,9 @@ export async function fetchPlaceDetails(placeId: string): Promise<{ ok: true; da
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Google Places API Error:", errorData);
-      return { 
-        ok: false, 
-        error: `Google API error (${response.status}): ${errorData.error?.message || response.statusText}` 
+      return {
+        ok: false,
+        error: `Google API error (${response.status}): ${errorData.error?.message || response.statusText}`
       };
     }
 
@@ -55,7 +55,7 @@ export async function fetchPlaceDetails(placeId: string): Promise<{ ok: true; da
       address: rawData.formattedAddress || "No address provided",
       rating: rawData.rating || 0,
       userRatingCount: rawData.userRatingCount || 0,
-      reviews: (rawData.reviews || []).map((rev: any): Review => ({
+      reviews: (rawData.reviews || []).map((rev: GooglePlaceReview): Review => ({
         authorName: rev.authorAttribution?.displayName || "Anonymous",
         profilePhotoUrl: rev.authorAttribution?.photoUri || "",
         rating: rev.rating || 0,

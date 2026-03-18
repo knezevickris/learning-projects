@@ -22,3 +22,22 @@ export interface ApiResponse {
   error: string | null;     // human-readable error message
   fetchedAt: string;        // ISO timestamp of when data was fetched
 }
+
+interface GooglePlaceAuthorAttribution {
+  displayName?: string;
+  uri?: string;
+  photoUri?: string;
+}
+
+interface GooglePlaceLocalizedText {
+  text?: string;
+  languageCode?: string;
+}
+
+export interface GooglePlaceReview {
+  authorAttribution?: GooglePlaceAuthorAttribution;
+  rating?: number;
+  relativePublishTimeDescription?: string;
+  publishTime?: string;
+  text?: GooglePlaceLocalizedText;
+}

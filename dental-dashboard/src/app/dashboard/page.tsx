@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  */
 export default async function DashboardPage() {
   const fetchedAt = new Date().toISOString();
-  
+
   try {
     // Direct server-side call instead of internal fetch()
     const fetchPromises = PRACTICES.map(p => fetchPlaceDetails(p.placeId));
@@ -38,8 +38,8 @@ export default async function DashboardPage() {
     });
 
     if (successfulPractices.length === 0) {
-      const allErrors = errorMessages.length > 0 
-        ? errorMessages.join(" | ") 
+      const allErrors = errorMessages.length > 0
+        ? errorMessages.join(" | ")
         : "Failed to connect to Google API.";
       return (
         <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
@@ -49,13 +49,13 @@ export default async function DashboardPage() {
         </main>
       );
     }
-    
+
     return (
       <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <DashboardClient 
-            practices={successfulPractices} 
-            fetchedAt={fetchedAt} 
+          <DashboardClient
+            practices={successfulPractices}
+            fetchedAt={fetchedAt}
           />
           {errorMessages.length > 0 && (
             <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-xs font-mono">
@@ -66,12 +66,18 @@ export default async function DashboardPage() {
       </main>
     );
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Dashboard Server Error:", err);
+
+    const message =
+      err instanceof Error
+        ? err.message
+        : "Failed to initialize dashboard.";
+
     return (
       <main className="min-h-screen bg-slate-50/50 px-4 py-12 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <ErrorMessage message={err.message || "Failed to initialize dashboard."} />
+          <ErrorMessage message={message} />
         </div>
       </main>
     );
