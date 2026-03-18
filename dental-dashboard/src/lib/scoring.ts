@@ -8,6 +8,6 @@ import { RATING_CONFIDENCE_THRESHOLD } from "./constants";
 export const calculateWeightedScore = (rating: number, reviewCount: number) => {
     if (reviewCount === 0) return 0;
     const k = RATING_CONFIDENCE_THRESHOLD;
-    const confidence = 1 - Math.exp(-reviewCount / k);
+    const confidence = 1 - Math.exp(reviewCount / k);
     return rating * confidence;
 };
