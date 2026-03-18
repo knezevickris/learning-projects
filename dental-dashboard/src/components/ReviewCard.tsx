@@ -16,6 +16,7 @@ interface ReviewCardProps {
  */
 export default function ReviewCard({ review }: ReviewCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const textLimit = 150;
   const hasLongText = review.text.length > textLimit;
   const displayedText = isExpanded ? review.text : review.text.slice(0, textLimit);
@@ -24,18 +25,17 @@ export default function ReviewCard({ review }: ReviewCardProps) {
     <div className="border-b border-brand-border/30 last:border-b-0 py-4">
       <div className="flex items-start gap-4">
         {/* Profile Avatar */}
-        <div className="flex-shrink-0 w-8 h-8 bg-brand-highlight/20 flex items-center justify-center text-[10px] font-bold text-brand-text/60 overflow-hidden">
-          {review.profilePhotoUrl ? (
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-highlight/20 flex items-center justify-center text-[10px] font-bold text-brand-text/60 overflow-hidden">
+          {review.profilePhotoUrl && !imgError ? (
             <img
               src={review.profilePhotoUrl}
               alt={review.authorName}
               className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
+              referrerPolicy="no-referrer"
+              onError={() => setImgError(true)}
             />
           ) : (
-            review.authorName.charAt(0)
+            review.authorName.charAt(0).toUpperCase()
           )}
         </div>
 

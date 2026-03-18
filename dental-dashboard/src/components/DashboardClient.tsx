@@ -1,11 +1,14 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { Practice, Review } from "@/lib/types";
 import PracticeCard from "./PracticeCard";
+import { Practice, Review } from "@/lib/types";
 import ReviewsList from "./ReviewsList";
 import PracticeSelector from "./PracticeSelector";
 import FilterBar, { SortOption } from "./FilterBar";
+import ComparisonTable from "./ComparisonTable";
+import { calculateWeightedScore } from "@/lib/scoring";
+import { downloadCSV } from "@/lib/csv-export";
 
 interface DashboardClientProps {
   practices: Practice[];
@@ -51,17 +54,7 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
     return practices.filter((p) => p.placeId === selectedPracticeId);
   }, [practices, selectedPracticeId]);
 
-  /**
-   * Calculates a "Dampened Rating" score.
-   * Trust grows as review count (v) increases relative to a threshold (k=15).
-   * Formula: Score = Rating * (1 - e ^ (-v / k))
-   */
-  const calculateWeightedScore = (rating: number, reviewCount: number) => {
-    if (reviewCount === 0) return 0;
-    const k = 15; // Confidence threshold
-    const confidence = 1 - Math.exp(-reviewCount / k);
-    return rating * confidence;
-  };
+
 
   // Determine the "Winner" (Top Performer) using Weighted Score
   const practiceMetrics = useMemo(() => {
@@ -114,40 +107,8 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
     };
   }, [practices, selectedPracticeId, selectedRatings, sortBy, debouncedSearchQuery]);
 
-  const downloadCSV = () => {
-    const reviewsToExport = reviewStats.filteredReviews;
-    if (reviewsToExport.length === 0) return;
-
-    // CSV Header
-    const headers = ["Practice Name", "Author", "Rating", "Review Text", "Date"];
-    
-    // Helper to escape CSV fields
-    const escapeCSV = (str: string) => {
-      if (!str) return '""';
-      const escaped = str.replace(/"/g, '""');
-      return `"${escaped}"`;
-    };
-
-    const csvContent = [
-      headers.join(","),
-      ...reviewsToExport.map(r => [
-        escapeCSV(r.practiceName),
-        escapeCSV(r.authorName),
-        r.rating,
-        escapeCSV(r.text),
-        escapeCSV(new Date(r.publishTime).toLocaleDateString())
-      ].join(","))
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", `google_reviews_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownloadCSV = () => {
+    downloadCSV(reviewStats.filteredReviews);
   };
 
   const selectorOptions = practices.map(p => ({ id: p.placeId, name: p.name }));
@@ -177,82 +138,7 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
         /* Comparison View: Side-by-Side */
         <div className="space-y-12">
           {/* 1. Comparison Metrics Table */}
-          <div className="bg-white border border-brand-border rounded-lg overflow-hidden shadow-sm">
-            <div className="px-6 py-4 border-b border-brand-border bg-brand-highlight/30">
-              <h2 className="text-sm font-bold text-brand-dark uppercase tracking-wider">Competitive Benchmarking</h2>
-            </div>
-            <div className="overflow-x-auto scrollbar-hide">
-              <table className="w-full text-left text-sm border-collapse min-w-max md:min-w-full">
-                <thead>
-                  <tr className="border-b border-brand-border">
-                    <th className="sticky left-0 px-4 md:px-6 py-4 font-bold text-brand-text/60 uppercase text-[10px] tracking-widest bg-white z-10 border-r border-brand-border/30">
-                      Metric
-                    </th>
-                    {practiceMetrics.map(p => (
-                      <th key={p.placeId} className="px-6 py-4 font-bold text-brand-dark bg-white">
-                        {p.name}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-brand-border/30">
-                  <tr>
-                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-brand-text/60 bg-white z-10 border-r border-brand-border/30">
-                      Google Rating
-                    </td>
-                    {practiceMetrics.map(p => (
-                      <td key={p.placeId} className="px-6 py-4 font-bold text-brand-dark">
-                        {p.rating.toFixed(1)} / 5.0
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-brand-text/60 bg-white z-10 border-r border-brand-border/30">
-                      Total Reviews
-                    </td>
-                    {practiceMetrics.map(p => (
-                      <td key={p.placeId} className="px-6 py-4 font-mono text-brand-dark">
-                        {p.userRatingCount.toLocaleString()}
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-brand-text/60 bg-white z-10 border-r border-brand-border/30">
-                      Strength Score
-                    </td>
-                    {practiceMetrics.map(p => {
-                      const score = calculateWeightedScore(p.rating, p.userRatingCount);
-                      return (
-                        <td key={p.placeId} className="px-6 py-4 font-mono text-brand-dark">
-                          {score.toFixed(2)}
-                          <span className="text-[10px] text-brand-text/40 ml-1">/ 5.0</span>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                  <tr>
-                    <td className="sticky left-0 px-4 md:px-6 py-4 font-medium text-brand-text/60 bg-white z-10 border-r border-brand-border/30">
-                      Rank
-                    </td>
-                    {practiceMetrics.map(p => {
-                      const isTop = p.placeId === topPracticeId;
-                      return (
-                        <td key={p.placeId} className="px-6 py-4">
-                          {isTop ? (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-brand-accent/30 text-brand-dark uppercase border border-brand-accent">
-                              #1 Leader
-                            </span>
-                          ) : (
-                            <span className="text-brand-text/40 text-xs">Competitor</span>
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ComparisonTable practiceMetrics={practiceMetrics} topPracticeId={topPracticeId} />
 
           {/* 2. Side-by-Side Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -292,7 +178,7 @@ export default function DashboardClient({ practices, fetchedAt }: DashboardClien
               onSearchChange={setSearchQuery}
               totalCount={reviewStats.total}
               filteredCount={reviewStats.filteredReviews.length}
-              onDownload={downloadCSV}
+              onDownload={handleDownloadCSV}
             />
             <ReviewsList reviews={reviewStats.filteredReviews} />
           </div>
