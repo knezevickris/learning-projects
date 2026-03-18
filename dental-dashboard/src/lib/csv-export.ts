@@ -37,5 +37,6 @@ export const downloadCSV = (reviewsToExport: (Review & { practiceName: string })
   link.style.visibility = "hidden";
   document.body.appendChild(link);
   link.click();
+  URL.revokeObjectURL(url);
   document.body.removeChild(link);
 };

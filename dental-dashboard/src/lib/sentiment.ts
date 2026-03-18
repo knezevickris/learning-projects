@@ -1,8 +1,40 @@
 import React from "react";
 
 export const sentimentConfig = {
-  positive: ["friendly", "without pain", "great", "excellent", "professional", "amazing", "best", "painless", "gentle", "happy", "clean", "wonderful", "thanks", "perfect"],
-  negative: ["pain", "wait", "not recommend", "misunderstanding", "waiting", "rude", "expensive", "costly", "hurt", "bad", "worst", "unprofessional", "angry", "disappointed", "slow", "fee"]
+  positive: [
+    "without pain",
+    "wonderful",
+    "excellent",
+    "professional",
+    "perfect",
+    "amazing",
+    "friendly",
+    "painless",
+    "gentle",
+    "thanks",
+    "great",
+    "clean",
+    "happy",
+    "best",
+  ],
+  negative: [
+    "not recommend",
+    "misunderstanding",
+    "disappointed",
+    "unprofessional",
+    "expensive",
+    "waiting",
+    "worst",
+    "angry",
+    "costly",
+    "hurt",
+    "pain",
+    "wait",
+    "rude",
+    "bad",
+    "slow",
+    "fee",
+  ]
 };
 
 // Pre-compute the combined regex string so it's not rebuilt on each call
@@ -17,18 +49,18 @@ export const highlightText = (text: string): React.ReactNode => {
 
   return parts.map((part, i) => {
     const lowerPart = part.toLowerCase();
-    
+
     if (sentimentConfig.positive.includes(lowerPart)) {
       return React.createElement(
         "mark",
-        { 
-          key: i, 
-          className: "bg-green-100 text-green-800 px-0.5 rounded-sm font-medium border-b border-green-200" 
+        {
+          key: i,
+          className: "bg-green-100 text-green-800 px-0.5 rounded-sm font-medium border-b border-green-200"
         },
         part
       );
     }
-    
+
     if (sentimentConfig.negative.includes(lowerPart)) {
       return React.createElement(
         "mark",
@@ -39,7 +71,7 @@ export const highlightText = (text: string): React.ReactNode => {
         part
       );
     }
-    
+
     return part;
   });
 };
