@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Review } from "@/lib/types";
+import { getNegativeResponseTemplate } from "@/lib/response-templates";
 import StarRating from "./StarRating";
 
 interface ReviewCardProps {
@@ -117,28 +118,11 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                 <span className="text-[10px] font-black text-brand-dark/60 uppercase tracking-widest">Suggested Response</span>
               </div>
               <p className="text-[11px] text-brand-text/80 leading-relaxed italic">
-                {(() => {
-                  const templates = [
-                    `Hi ${review.authorName.split(' ')[0]}, we're truly sorry to hear about your experience. We value our patients' feedback and would like to learn more. Please contact our office manager so we can address your concerns directly.`,
-                    `Hello ${review.authorName.split(' ')[0]}, we apologize for falling short of your expectations. We strive for excellence and would appreciate the chance to make this right. Please reach out to us at your earliest convenience.`,
-                    `Dear ${review.authorName.split(' ')[0]}, thank you for bringing this to our attention. We are committed to providing high-quality care and are sorry you didn't feel that during your visit. We would love to discuss this further with you.`,
-                    `We appreciate your honest feedback. We are constantly working to improve our patient experience and would like to hear more about where we can improve. Please reach out to our team at the office.`
-                  ];
-                  // Use authorName to pick a stable template
-                  const index = review.authorName.length % templates.length;
-                  return templates[index];
-                })()}
+                {getNegativeResponseTemplate(review.authorName)}
               </p>
               <button 
                 onClick={() => {
-                  const templates = [
-                    `Hi ${review.authorName.split(' ')[0]}, we're truly sorry to hear about your experience. We value our patients' feedback and would like to learn more. Please contact our office manager so we can address your concerns directly.`,
-                    `Hello ${review.authorName.split(' ')[0]}, we apologize for falling short of your expectations. We strive for excellence and would appreciate the chance to make this right. Please reach out to us at your earliest convenience.`,
-                    `Dear ${review.authorName.split(' ')[0]}, thank you for bringing this to our attention. We are committed to providing high-quality care and are sorry you didn't feel that during your visit. We would love to discuss this further with you.`,
-                    `We appreciate your honest feedback. We are constantly working to improve our patient experience and would like to hear more about where we can improve. Please reach out to our team at the office.`
-                  ];
-                  const index = review.authorName.length % templates.length;
-                  navigator.clipboard.writeText(templates[index]);
+                  navigator.clipboard.writeText(getNegativeResponseTemplate(review.authorName));
                 }}
                 className="mt-2 text-[9px] font-bold text-brand-dark/40 hover:text-brand-dark uppercase tracking-wide border border-brand-border/30 px-2 py-0.5 rounded bg-white transition-colors"
                 title="Copy to clipboard"
