@@ -46,7 +46,7 @@ export default function PracticeCard({ practice, highlighted, className = "" }: 
 
       <div className="pt-4 border-t border-brand-border/30">
         <h3 className="text-[10px] font-bold text-brand-text/50 uppercase tracking-wider mb-2">
-          Rating Distribution
+          Recent Reviews ({practice.reviews.length})
         </h3>
         <RatingDistribution reviews={practice.reviews} />
       </div>
