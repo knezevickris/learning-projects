@@ -1,0 +1,340 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": [
+                "Dentist",
+                "LocalBusiness"
+            ],
+            "@id": "https://brightsmile.com",
+            "name": "Bright Smile Dental Care",
+            "url": "https://brightsmile.com",
+            "logo": "https://brightsmile.com/logo.png",
+            "image": "https://brightsmile.com/images/hero-image.jpg",
+            "description": "A dental clinic  providing highest quality dental services in Riverside since 2012.",
+            "telephone": "951 5550187",
+            "email": "hello@brightsmiledental.com",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "247 Oak Street",
+                "addressLocality": "Riverside",
+                "addressRegion": "CA",
+                "postalCode": "92501",
+                "addressCountry": "US"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "33.9735",
+                "longitude": "-117.3280"
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday"
+                    ],
+                    "opens": "08:00",
+                    "closes": "18:00"
+                },
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Saturday"
+                    ],
+                    "opens": "09:00",
+                    "closes": "14:00"
+                }
+            ],
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "5000",
+                "bestRating": 5,
+                "worstRating": 1
+            },
+            "sameAs": [
+                "https://www.facebook.com/BrightSmileDentalCare",
+                "https://www.instagram.com/BrightSmileDentalCare",
+                "https://www.tiktok.com/BrightSmileDentalCare"
+            ],
+            "healthPlanNetworkId": "EXAMPLE-US-001",
+            "medicalSpecialty": "Dentistry"
+        },
+        {
+            "@type": "Service",
+            "@id": "https://brightsmile.com/services#general",
+            "name": "General Dentistry",
+            "serviceType": "Preventive and restorative dental care",
+            "description": "Comprehensive general dentistry services including professional cleanings, dental fillings, crowns, and root canal therapy to keep your smile healthy, comfortable, and strong.",
+            "provider": {
+                "@type": [
+                    "Dentist",
+                    "LocalBusiness"
+                ],
+                "@id": "https://brightsmile.com"
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": "Riverside"
+            },
+            "url": "https://brightsmile.com/services#general",
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "General Dentistry Services",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Professional Cleanings",
+                            "description": "Routine hygiene visits where our hygienists remove plaque, tartar, and surface stains, then apply fluoride to strengthen enamel and help prevent cavities and gum disease."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Dental Fillings",
+                            "description": "Tooth-colored composite fillings that repair cavities, restore tooth strength, and protect against further decay while blending naturally with your enamel."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Dental Crowns",
+                            "description": "Custom porcelain or ceramic crowns that cap and protect damaged or weakened teeth, providing durable, natural-looking support after large fillings or root canal treatment."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Root Canal Therapy",
+                            "description": "Modern root canal treatment to remove infection, relieve pain, and save natural teeth using precise, comfortable techniques."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "Service",
+            "@id": "https://brightsmile.com/services#cosmetic",
+            "name": "Cosmetic Dentistry",
+            "serviceType": "Cosmetic dental care",
+            "description": "Cosmetic dental treatments such as professional whitening, porcelain veneers, and bonding designed to enhance tooth colour, shape, and symmetry for a brighter, more confident smile.",
+            "provider": {
+                "@type": [
+                    "Dentist",
+                    "LocalBusiness"
+                ],
+                "@id": "https://brightsmile.com"
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": "Riverside"
+            },
+            "url": "https://brightsmile.com/services#cosmetic",
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Cosmetic Dentistry",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Teeth whitening",
+                            "description": "Brighten stained or discoloured teeth with professional in-office gels and LED technology for safe, dramatic results in about an hour, revealing smiles several shades whiter that stay vibrant for months."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Porcelain Veneers",
+                            "description": "Ultra-thin, custom porcelain veneers that bond to the front of your teeth to correct chips, gaps, and misalignment, creating a durable, stain-resistant “Hollywood smile” in just a few visits."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Dental bonding",
+                            "description": "Quick, single-visit bonding that reshapes teeth using shade-matched composite resin to fix chips, close small gaps, and instantly improve colour with little to no enamel removal."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "Service",
+            "@id": "https://brightsmile.com/services#orthodontics",
+            "name": "Orthodontics",
+            "serviceType": "Orthodontic care",
+            "description": "Orthodontic treatments including Invisalign clear aligners, traditional braces, and retainers designed to straighten teeth, correct bites, and maintain long-term smile alignment.",
+            "provider": {
+                "@type": [
+                    "Dentist",
+                    "LocalBusiness"
+                ],
+                "@id": "https://brightsmile.com"
+            },
+            "areaServed": {
+                "@type": "City",
+                "name": "Riverside"
+            },
+            "url": "https://brightsmile.com/services#general",
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Orthodontics",
+                "itemListElement": [
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Invisalign Clear Aligners",
+                            "description": "Virtually invisible clear aligner trays that gradually shift teeth without wires, removable for eating and brushing, with average treatment times of 12–18 months under professional monitoring."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Traditional Braces",
+                            "description": "Metal or ceramic bracket-and-wire braces that deliver precise correction for complex crowding or bite issues, typically achieving proven results in about 18–24 months with regular adjustments."
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        "itemOffered": {
+                            "@type": "Service",
+                            "name": "Retainers",
+                            "description": "Custom fixed or removable retainers worn after orthodontic treatment to maintain your new smile and prevent teeth from shifting, often used nightly for long-term stability."
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "@type": "Person",
+            "@id": "https://brightsmile.com/about",
+            "name": "Dr. Marcus Chen, DDS",
+            "jobTitle": "General and Cosmetic Dentist",
+            "description": "With over 12 years of clinical experience, Dr. Marcus Chen leads BrightSmile with a patient-first philosophy, specialising in comprehensive smile makeovers and advanced preventive care in Riverside, CA.",
+            "url": "https://brightsmile.com/about",
+            "worksFor": {
+                "@type": [
+                    "Dentist",
+                    "LocalBusiness"
+                ],
+                "@id": "https://brightsmile.com"
+            },
+            "knowsAbout": [
+                {
+                    "@id": "https://brightsmile.com/services#general"
+                },
+                {
+                    "@id": "https://brightsmile.com/services#cosmetic"
+                }
+            ],
+            "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "San Francisco School of Dentistry"
+            },
+            "hasCredential": {
+                "@type": "EducationalOccupationalCredential",
+                "credentialCategory": "DDS",
+                "name": "Doctor of Dental Surgery (DDS)"
+            }
+        },
+        {
+            "@type": "Person",
+            "@id": "https://brightsmile.com/about",
+            "name": "Dr. Sarah Rivera, DMD",
+            "jobTitle": "Orthodontics & Invisalign Specialist",
+            "description": "Dr. Sarah Rivera brings 8 years of specialized experience in orthodontics and Invisalign therapy, focusing on smile alignment that enhances both dental health and facial aesthetics for patients of all ages.",
+            "url": "https://brightsmile.com/about",
+            "worksFor": {
+                "@type": [
+                    "Dentist",
+                    "LocalBusiness"
+                ],
+                "@id": "https://brightsmile.com"
+            },
+            "knowsAbout": {
+                "@id": "https://brightsmile.com/services#orthodontics"
+            },
+            "hasCredential": {
+                "@type": "EducationalOccupationalCredential",
+                "credentialCategory": "DMD",
+                "name": "Doctor of Medicine in Dentistry"
+            }
+        },
+        {
+            "@type": "FAQPage",
+            "@id": "https://brightsmile.com/#faq",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How often should I come in for a dental check-up and cleaning?",
+                    "about": {
+                        "@id": "https://brightsmile.com/services#general"
+                    },
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Most patients benefit from a dental check-up and professional cleaning every six months. If you have a history of gum disease, frequent cavities, or orthodontic treatment, Dr. Chen or Dr. Rivera may recommend more frequent visits to keep your smile healthy."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Do you offer teeth whitening, and is it safe?",
+                    "about": {
+                        "@id": "https://brightsmile.com/services#cosmetic"
+                    },
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. BrightSmile offers professional in-office teeth whitening using dentist-supervised gels and LED light technology. When performed by our team and after a proper exam, whitening is a safe way to remove stains and brighten your smile."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is the difference between Invisalign clear aligners and traditional braces?",
+                    "about": {
+                        "@id": "https://brightsmile.com/services#orthodontics"
+                    },
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Invisalign uses a series of clear, removable aligner trays to gradually move your teeth, which makes them almost invisible and easy to take out for eating and brushing. Traditional braces use brackets and wires that stay on your teeth full time and are often recommended for more complex bite or alignment cases."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Do you treat patients of all ages?",
+                    "about": {
+                        "@id": "https://brightsmile.com"
+                    },
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. BrightSmile Dental Care welcomes children, teens, and adults. Our team provides preventive visits, restorative care, cosmetic treatments, and orthodontic options like Invisalign so your whole family can be treated in one office."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What should I do if I have a dental emergency?",
+                    "about": {
+                        "@id": "https://brightsmile.com/#service-general-dentistry"
+                    },
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "If you experience severe tooth pain, swelling, trauma, or a broken tooth, call our office as soon as possible. We reserve time for same-day emergency visits whenever we can. If you have uncontrolled bleeding or a serious facial injury, go to the nearest emergency room first."
+                    }
+                }
+            ]
+        }
+    ]
+}
