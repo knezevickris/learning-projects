@@ -11,9 +11,9 @@
             "url": "https://brightsmile.com",
             "logo": "https://brightsmile.com/logo.png",
             "image": "https://brightsmile.com/images/hero-image.jpg",
-            "description": "A dental clinic  providing highest quality dental services in Riverside since 2012.",
-            "telephone": "951 5550187",
-            "email": "hello@brightsmiledental.com",
+            "description": "A dental clinic providing highest quality dental services in Riverside since 2012.",
+            "telephone": "+1-951-555-0187",
+            "email": "hello@brightsmile.com",
             "priceRange": "$$",
             "address": {
                 "@type": "PostalAddress",
@@ -52,17 +52,16 @@
             ],
             "aggregateRating": {
                 "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "5000",
-                "bestRating": 5,
-                "worstRating": 1
+                "ratingValue": 4.9,
+                "reviewCount": 5000,
+                "bestRating": 5.0,
+                "worstRating": 1.0
             },
             "sameAs": [
                 "https://www.facebook.com/BrightSmileDentalCare",
                 "https://www.instagram.com/BrightSmileDentalCare",
                 "https://www.tiktok.com/BrightSmileDentalCare"
             ],
-            "healthPlanNetworkId": "EXAMPLE-US-001",
             "medicalSpecialty": "Dentistry"
         },
         {
@@ -188,7 +187,7 @@
                 "@type": "City",
                 "name": "Riverside"
             },
-            "url": "https://brightsmile.com/services#general",
+            "url": "https://brightsmile.com/services#orthodontics",
             "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Orthodontics",
@@ -222,11 +221,11 @@
         },
         {
             "@type": "Person",
-            "@id": "https://brightsmile.com/about",
+            "@id": "https://brightsmile.com/about#dr-chen",
             "name": "Dr. Marcus Chen, DDS",
             "jobTitle": "General and Cosmetic Dentist",
             "description": "With over 12 years of clinical experience, Dr. Marcus Chen leads BrightSmile with a patient-first philosophy, specialising in comprehensive smile makeovers and advanced preventive care in Riverside, CA.",
-            "url": "https://brightsmile.com/about",
+            "url": "https://brightsmile.com/about#dr-chen",
             "worksFor": {
                 "@type": [
                     "Dentist",
@@ -254,11 +253,11 @@
         },
         {
             "@type": "Person",
-            "@id": "https://brightsmile.com/about",
+            "@id": "https://brightsmile.com/about#dr-rivera",
             "name": "Dr. Sarah Rivera, DMD",
             "jobTitle": "Orthodontics & Invisalign Specialist",
             "description": "Dr. Sarah Rivera brings 8 years of specialized experience in orthodontics and Invisalign therapy, focusing on smile alignment that enhances both dental health and facial aesthetics for patients of all ages.",
-            "url": "https://brightsmile.com/about",
+            "url": "https://brightsmile.com/about#dr-rivera",
             "worksFor": {
                 "@type": [
                     "Dentist",
@@ -268,6 +267,10 @@
             },
             "knowsAbout": {
                 "@id": "https://brightsmile.com/services#orthodontics"
+            },
+            "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "University of California"
             },
             "hasCredential": {
                 "@type": "EducationalOccupationalCredential",
@@ -327,7 +330,7 @@
                     "@type": "Question",
                     "name": "What should I do if I have a dental emergency?",
                     "about": {
-                        "@id": "https://brightsmile.com/#service-general-dentistry"
+                        "@id": "https://brightsmile.com/services#general"
                     },
                     "acceptedAnswer": {
                         "@type": "Answer",
